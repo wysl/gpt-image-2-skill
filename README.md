@@ -4,20 +4,23 @@
 
 ## 模板生成效果展示
 
-| poster-cosplay | video-pitch | portrait-photography |
-|:--------------:|:-----------:|:--------------------:|
-| ![poster-cosplay](output/poster-cosplay-example.png) | ![video-pitch](output/video-pitch-example.png) | ![portrait-photography](output/portrait-photography-example.png) |
-| Cosplay角色海报 | Pitch Deck 3联拼贴 | 人像摄影 |
-
-| couple-portrait | kpop-idol | street-photography |
-|:---------------:|:---------:|:------------------:|
-| ![couple-portrait](output/couple-portrait-example.png) | ![kpop-idol](output/kpop-idol-example.png) | ![street-photography](output/street-photography-example.png) |
-| 情侣双人写真 | K-pop偶像写真 | 街头摄影 |
-
-| bedroom-mirror-selfie | person-photoshoot-3x3 | anime-date-collage-3x3 |
-|:---------------------:|:--------------------:|:----------------------:|
-| ![bedroom-mirror-selfie](output/bedroom-mirror-selfie-example.png) | ![person-photoshoot-3x3](output/person-photoshoot-3x3-example.png) | ![anime-date-collage-3x3](output/anime-date-collage-3x3-example.png) |
-| 卧室镜自拍 | 人物写真九宫格 | 动漫少女与真人约会拼贴 |
+<table>
+<tr>
+<td align="center"><img src="output/poster-cosplay-example.png" width="200"><br><b>Cosplay角色海报</b></td>
+<td align="center"><img src="output/video-pitch-example.png" width="200"><br><b>Pitch Deck 3联拼贴</b></td>
+<td align="center"><img src="output/portrait-photography-example.png" width="200"><br><b>人像摄影</b></td>
+</tr>
+<tr>
+<td align="center"><img src="output/couple-portrait-example.png" width="200"><br><b>情侣双人写真</b></td>
+<td align="center"><img src="output/kpop-idol-example.png" width="200"><br><b>K-pop偶像写真</b></td>
+<td align="center"><img src="output/street-photography-example.png" width="200"><br><b>街头摄影</b></td>
+</tr>
+<tr>
+<td align="center"><img src="output/bedroom-mirror-selfie-example.png" width="200"><br><b>卧室镜自拍</b></td>
+<td align="center"><img src="output/person-photoshoot-3x3-example.png" width="200"><br><b>人物写真九宫格</b></td>
+<td align="center"><img src="output/anime-date-collage-3x3-example.png" width="200"><br><b>动漫少女与真人约会拼贴</b></td>
+</tr>
+</table>
 
 ---
 
