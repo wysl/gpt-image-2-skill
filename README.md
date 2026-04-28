@@ -6,19 +6,19 @@
 
 <table>
 <tr>
-<td align="center"><img src="output/poster-cosplay-example.png" style="max-width:200px; max-height:300px; object-fit:contain"><br><b>Cosplay角色海报</b></td>
-<td align="center"><img src="output/video-pitch-example.png" style="max-width:200px; max-height:300px; object-fit:contain"><br><b>Pitch Deck 3联拼贴</b></td>
-<td align="center"><img src="output/portrait-photography-example.png" style="max-width:200px; max-height:300px; object-fit:contain"><br><b>人像摄影</b></td>
+<td align="center"><img src="output/poster-cosplay-example.png" width="200" height="300"><br><b>Cosplay角色海报</b></td>
+<td align="center"><img src="output/video-pitch-example.png" width="200" height="300"><br><b>Pitch Deck 3联拼贴</b></td>
+<td align="center"><img src="output/portrait-photography-example.png" width="200" height="300"><br><b>人像摄影</b></td>
 </tr>
 <tr>
-<td align="center"><img src="output/couple-portrait-example.png" style="max-width:200px; max-height:300px; object-fit:contain"><br><b>情侣双人写真</b></td>
-<td align="center"><img src="output/kpop-idol-example.png" style="max-width:200px; max-height:300px; object-fit:contain"><br><b>K-pop偶像写真</b></td>
-<td align="center"><img src="output/street-photography-example.png" style="max-width:200px; max-height:300px; object-fit:contain"><br><b>街头摄影</b></td>
+<td align="center"><img src="output/couple-portrait-example.png" width="200" height="300"><br><b>情侣双人写真</b></td>
+<td align="center"><img src="output/kpop-idol-example.png" width="200" height="300"><br><b>K-pop偶像写真</b></td>
+<td align="center"><img src="output/street-photography-example.png" width="200" height="300"><br><b>街头摄影</b></td>
 </tr>
 <tr>
-<td align="center"><img src="output/bedroom-mirror-selfie-example.png" style="max-width:200px; max-height:300px; object-fit:contain"><br><b>卧室镜自拍</b></td>
-<td align="center"><img src="output/person-photoshoot-3x3-example.png" style="max-width:200px; max-height:300px; object-fit:contain"><br><b>人物写真九宫格</b></td>
-<td align="center"><img src="output/anime-date-collage-3x3-example.png" style="max-width:200px; max-height:300px; object-fit:contain"><br><b>动漫少女与真人约会拼贴</b></td>
+<td align="center"><img src="output/bedroom-mirror-selfie-example.png" width="200" height="300"><br><b>卧室镜自拍</b></td>
+<td align="center"><img src="output/person-photoshoot-3x3-example.png" width="200" height="300"><br><b>人物写真九宫格</b></td>
+<td align="center"><img src="output/anime-date-collage-3x3-example.png" width="200" height="300"><br><b>动漫少女与真人约会拼贴</b></td>
 </tr>
 </table>
 
