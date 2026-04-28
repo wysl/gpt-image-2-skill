@@ -1,7 +1,11 @@
-# 生成结果
-history/
-output/
+# 生成结果（保留示例图片）
+# history/
+# output/
 template/*/history/
+
+# 但排除临时生成的文件
+output/*.tmp
+output/*.log
 
 # Python
 __pycache__/
