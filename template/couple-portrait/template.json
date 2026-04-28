@@ -1,0 +1,101 @@
+{
+  "subject": {
+    "描述": "以[person_a]和[person_b]为主体的双人/情侣写真",
+    "类型": "双人亲密摄影",
+    "氛围": "[relationship_type]"
+  },
+  "style": {
+    "风格": "情侣/双人写真风格",
+    "特征": [
+      "亲密感",
+      "互动自然",
+      "甜蜜氛围",
+      "专业人像质感"
+    ]
+  },
+  "person_a": {
+    "角色": "[person_a_name]",
+    "外貌": "[person_a_appearance]",
+    "服装": "[person_a_clothing]",
+    "姿态": "[person_a_pose]"
+  },
+  "person_b": {
+    "角色": "[person_b_name]",
+    "外貌": "[person_b_appearance]",
+    "服装": "[person_b_clothing]",
+    "姿态": "[person_b_pose]"
+  },
+  "interaction": {
+    "互动类型": "[interaction_type]",
+    "描述": [
+      "自然身体接触",
+      "眼神交流",
+      "情感流露",
+      "亲密距离"
+    ]
+  },
+  "environment": {
+    "背景": "[background_scene]",
+    "氛围": [
+      "[atmosphere]",
+      "浪漫",
+      "温馨"
+    ]
+  },
+  "composition": {
+    "构图": [
+      "竖版双人 (9:16)",
+      "中景双人照",
+      "浅景深突出两人"
+    ]
+  },
+  "lighting": {
+    "灯光": [
+      "[lighting_style]",
+      "柔和暖光",
+      "营造亲密氛围"
+    ]
+  },
+  "typography": {
+    "排版逻辑": "默认不添加文字，仅保留简洁排版框架；除非用户明确要求添加文字内容",
+    "层级": []
+  },
+  "mood": {
+    "氛围": [
+      "[mood]",
+      "甜蜜",
+      "亲密",
+      "浪漫"
+    ]
+  },
+  "negative": {
+    "避免": [
+      "文字重复",
+      "人物分离",
+      "不自然互动",
+      "低质量渲染"
+    ]
+  },
+  "quality": "high",
+  "longest side": "3840",
+  "aspect_ratio": "9:16",
+  "defaults": {
+    "person_a": "角色A",
+    "person_a_name": "角色A",
+    "person_a_appearance": "温柔知性的女性，及肩黑发，温婉眼神",
+    "person_a_clothing": "米白色针织衫，简约优雅",
+    "person_a_pose": "侧身靠近，面带微笑",
+    "person_b": "角色B",
+    "person_b_name": "角色B",
+    "person_b_appearance": "阳光稳重的男性，短发，五官立体",
+    "person_b_clothing": "深蓝色休闲衬衫",
+    "person_b_pose": "温柔注视对方",
+    "interaction_type": "甜蜜对视，自然依偎",
+    "background_scene": "温馨咖啡厅或黄昏公园长椅",
+    "atmosphere": "温馨甜蜜",
+    "lighting_style": "暖色午后自然光",
+    "mood": "甜蜜温馨",
+    "relationship_type": "甜蜜情侣"
+  },
+  "default_size": "2160x3840"
+}

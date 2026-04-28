@@ -1,0 +1,145 @@
+{
+  "display_name_cn": "人物写真3x3",
+  "subject": {
+    "描述": "9:16 vertical — a 3x3 grid collage (nine images) forming a [series_style] portrait photoshoot series. Each frame features the same [subject_type], maintaining [required_keyword] and 100% consistency in facial features, proportions, hairstyle, and identity across all nine shots. Natural, ultra-realistic skin texture, no retouching, no smoothing"
+  },
+  "style": {
+    "风格": "[poster_style]",
+    "特征": [
+      "3x3 九宫格拼贴海报",
+      "九张图为同一人物，必须保持 [required_keyword]",
+      "[aesthetic_style]",
+      "ultra-realistic",
+      "[tone_style]",
+      "subtle analog film grain"
+    ]
+  },
+  "model": {
+    "人物": "[subject_name]",
+    "妆容": "[makeup_style]",
+    "肌肤": "[skin_texture]",
+    "特征": [
+      "same [subject_type] across all nine frames",
+      "maintaining [required_keyword]",
+      "maintaining 100% consistency in facial features, proportions, hairstyle, and identity",
+      "[expression_style]",
+      "soft natural expression"
+    ]
+  },
+  "hair": {
+    "描述": "[hair_style]",
+    "特征": [
+      "same hairstyle in all nine shots",
+      "natural volume",
+      "soft movement"
+    ]
+  },
+  "costume": {
+    "描述": "[outfit_style]",
+    "特征": [
+      "same outfit in all nine images",
+      "clean idol styling",
+      "natural fabric texture"
+    ]
+  },
+  "environment": {
+    "背景": "[background_scene]",
+    "风格": [
+      "minimal set",
+      "plain wall",
+      "clean indoor atmosphere",
+      "not cluttered"
+    ]
+  },
+  "composition": {
+    "构图": [
+      "9:16 vertical poster",
+      "3x3 grid collage (nine images)",
+      "top row — [top_left_pose] / [top_center_pose] / [top_right_pose]",
+      "middle row — [mid_left_pose] / [mid_center_pose] / [mid_right_pose]",
+      "bottom row — [bottom_left_pose] / [bottom_center_pose] / [bottom_right_pose]",
+      "balanced spacing and consistent visual rhythm across all panels"
+    ]
+  },
+  "lighting": {
+    "灯光": [
+      "[lighting_style]",
+      "gentle highlights",
+      "low contrast",
+      "subtle film-like softness",
+      "soft window light"
+    ]
+  },
+  "typography": {
+    "排版逻辑": "Cosplay 海报格式模板；允许封面式图文排版，但核心主体必须始终保持 [required_keyword]。以后调用该模板时，生成提示词必须保留关键词‘100% 一致性’",
+    "层级": [
+      {
+        "层级": 1,
+        "内容": "主标题 - [title_text]",
+        "字体": "高对比纤细衬线体或现代中文宋体"
+      },
+      {
+        "层级": 2,
+        "内容": "副标题 - [subtitle_text]",
+        "字体": "中等字重黑体或衬线体"
+      },
+      {
+        "层级": 3,
+        "内容": "可选中文短标语 - [tagline_text]",
+        "字体": "细中文宋体"
+      }
+    ],
+    "文字规则": "模板关键词中必须携带‘100% 一致性’，调用时也必须保留该关键词"
+  },
+  "mood": {
+    "氛围": [
+      "[mood_style]",
+      "soft",
+      "natural",
+      "[aesthetic_style]"
+    ]
+  },
+  "negative": {
+    "避免": [
+      "different identity across panels",
+      "face drift between frames",
+      "retouched plastic skin",
+      "heavy smoothing",
+      "low quality rendering",
+      "messy background"
+    ]
+  },
+  "quality": "high",
+  "longest side": "3840",
+  "aspect_ratio": "9:16",
+  "default_size": "2160x3840",
+  "defaults": {
+    "required_keyword": "100% 一致性",
+    "subject_name": "young Korean female idol",
+    "subject_type": "young Korean female idol",
+    "series_style": "Korean idol",
+    "poster_style": "韩系偶像写真海报 / photobook collage poster",
+    "aesthetic_style": "Korean idol photobook aesthetic",
+    "tone_style": "soft dreamy tone",
+    "makeup_style": "Clean idol-style minimal makeup, soft glow, subtle imperfections",
+    "skin_texture": "Natural, ultra-realistic skin texture, no retouching, no smoothing",
+    "expression_style": "gentle smile when needed",
+    "hair_style": "long, voluminous dark hair, slightly tousled, consistent across all frames",
+    "outfit_style": "cohesive Korean idol photoshoot styling — white shirt + short bottoms, same outfit across all frames",
+    "background_scene": "minimal studio or simple indoor environment, plain wall, soft window light, clean background",
+    "lighting_style": "soft diffused natural light",
+    "title_text": "人物写真3x3",
+    "subtitle_text": "Korean idol portrait series",
+    "tagline_text": "自然、亲密、柔和的九宫格写真",
+    "mood_style": "intimate",
+    "top_left_pose": "standing naturally looking slightly away",
+    "top_center_pose": "facing camera casual mid-motion",
+    "top_right_pose": "slight side angle soft gaze",
+    "mid_left_pose": "looking slightly upward",
+    "mid_center_pose": "close-up direct eye contact gentle smile",
+    "mid_right_pose": "turning body slightly mid-motion",
+    "bottom_left_pose": "seated or leaning casually",
+    "bottom_center_pose": "back partially turned looking over shoulder",
+    "bottom_right_pose": "standing close to frame soft expression"
+  }
+}

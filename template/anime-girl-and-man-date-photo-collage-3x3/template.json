@@ -1,0 +1,159 @@
+{
+  "display_name_cn": "二次元少女与男生约会拼贴3x3",
+  "subject": {
+    "描述": "A 3x3 photo collage of 9 warm, cinematic lifestyle snapshots featuring [man_subject] and [anime_girl_subject] posed together as casual date photos. The male character must be rendered as a real live-action human in every panel, never anime-stylized. The female character must be rendered as a clearly anime / 2D illustrated character in every panel, never realistic live-action. The collage must maintain [required_keyword] for both recurring subjects across all 9 panels, especially the anime girl’s face, hairstyle, body proportions, outfit, and identity"
+  },
+  "style": {
+    "风格": "[poster_style]",
+    "特征": [
+      "3x3 photo collage of 9 images",
+      "tight grid with thin white dividers",
+      "warm cinematic lifestyle snapshots",
+      "subtle social-media photo-dump aesthetics",
+      "must preserve [required_keyword]",
+      "male character must stay fully realistic live-action",
+      "female character must stay clearly anime / cel-shaded / 2D"
+    ]
+  },
+  "man": {
+    "描述": "[man_subject]",
+    "特征": [
+      "must be a real adult human male",
+      "strictly live-action photographic appearance",
+      "short dark hair",
+      "light skin",
+      "average build",
+      "plain dark navy or black long-sleeve shirt",
+      "male face naturally de-emphasized in a candid lifestyle-photo way, but never blurred, censored, pixelated, mosaicked, or artificially obscured",
+      "never anime-stylized"
+    ]
+  },
+  "anime_girl": {
+    "描述": "[anime_girl_subject]",
+    "特征": [
+      "must be a clearly anime-style / manga-style / 2D illustrated young woman",
+      "never converted into a realistic human",
+      "long blonde twin ponytails",
+      "large blue eyes",
+      "light skin",
+      "slim petite build",
+      "black sleeveless top",
+      "layered silver necklaces including a cross pendant",
+      "black wrist accessories",
+      "red plaid pleated mini skirt",
+      "black-and-white striped thigh-high socks",
+      "clean cel-shaded anime rendering"
+    ]
+  },
+  "integration": {
+    "描述": "Blend realistic photography with a convincingly integrated 2D anime character. The man must remain fully realistic and photographic; the girl must remain clearly anime / cel-shaded / 2D. Match scene lighting, perspective, focus, and color grading so they appear naturally present together without collapsing either character style"
+  },
+  "environment": {
+    "背景": "[background_scene]",
+    "风格": [
+      "romantic urban realism",
+      "moody evening tones",
+      "soft bokeh",
+      "shallow depth of field",
+      "intimate candid couple energy"
+    ]
+  },
+  "composition": {
+    "构图": [
+      "vertical poster canvas with a 3x3 collage of 9 tightly gridded panels",
+      "thin white dividers",
+      "consistent amber-brown color grading",
+      "panel 1 — [panel_1]",
+      "panel 2 — [panel_2]",
+      "panel 3 — [panel_3]",
+      "panel 4 — [panel_4]",
+      "panel 5 — [panel_5]",
+      "panel 6 — [panel_6]",
+      "panel 7 — [panel_7]",
+      "panel 8 — [panel_8]",
+      "panel 9 — [panel_9]"
+    ]
+  },
+  "lighting": {
+    "灯光": [
+      "[lighting_style]",
+      "soft ambient glow",
+      "moody evening atmosphere",
+      "realistic scene-matched highlights",
+      "subtle cinematic contrast"
+    ]
+  },
+  "typography": {
+    "排版逻辑": "3x3 约会拼贴模板；允许封面式图文排版，但核心主体必须始终保持 [required_keyword]。男角色必须强制真人化，女角色必须强制二次元/动漫化。以后调用该模板时，生成提示词必须保留关键词‘100% 一致性’",
+    "层级": [
+      {
+        "层级": 1,
+        "内容": "主标题 - [title_text]",
+        "字体": "高对比纤细衬线体或现代中文宋体"
+      },
+      {
+        "层级": 2,
+        "内容": "副标题 - [subtitle_text]",
+        "字体": "中等字重黑体或衬线体"
+      },
+      {
+        "层级": 3,
+        "内容": "可选中文短标语 - [tagline_text]",
+        "字体": "细中文宋体"
+      }
+    ],
+    "文字规则": "模板关键词中必须携带‘100% 一致性’，调用时也必须保留该关键词"
+  },
+  "mood": {
+    "氛围": [
+      "[mood_style]",
+      "romantic",
+      "urban",
+      "intimate",
+      "warm cinematic"
+    ]
+  },
+  "negative": {
+    "避免": [
+      "identity drift between panels",
+      "anime girl changing hairstyle or clothes between frames",
+      "poor anime-real integration",
+      "messy grid",
+      "low quality rendering",
+      "anime-stylized male",
+      "realistic live-action female",
+      "both characters rendered in the same visual medium",
+      "loss of anime cel-shaded look for the girl",
+      "loss of realistic photographic look for the man",
+      "blurred male face",
+      "pixelated face",
+      "mosaic censorship",
+      "artificial face obscuring"
+    ]
+  },
+  "quality": "high",
+  "longest side": "3840",
+  "aspect_ratio": "9:16",
+  "default_size": "2160x3840",
+  "defaults": {
+    "required_keyword": "100% 一致性",
+    "title_text": "Anime Girl and Man Date Photo Collage 3x3",
+    "subtitle_text": "二次元少女与男生约会拼贴3x3",
+    "tagline_text": "100% 一致性",
+    "poster_style": "anime girl + real man date photo collage poster",
+    "man_subject": "a real adult man with short dark hair, light skin, average build, wearing a plain dark navy or black long-sleeve shirt",
+    "anime_girl_subject": "an anime-style young woman companion with long blonde twin ponytails, large blue eyes, light skin, slim petite build, black sleeveless top, layered silver necklaces including a cross pendant, black wrist accessories, a red plaid pleated mini skirt, and black-and-white striped thigh-high socks",
+    "background_scene": "urban evening interiors and city night environments suitable for candid date snapshots",
+    "lighting_style": "moody evening tones with soft bokeh",
+    "mood_style": "intimate candid couple energy",
+    "panel_1": "close indoor portrait with both seated close together, the girl resting beside him",
+    "panel_2": "nighttime city street side profile conversation under blurred streetlights",
+    "panel_3": "indoors, both reading a book together, the girl leaning on his shoulder",
+    "panel_4": "outdoor cafe table, both holding takeaway coffee cups",
+    "panel_5": "restaurant table with multiple dishes visible, dining together",
+    "panel_6": "mirror selfie in an elevator, the man holding a smartphone while the girl makes a peace sign",
+    "panel_7": "car interior road-trip shot, the man driving and the anime girl in the passenger seat",
+    "panel_8": "seaside sunset from behind, both sitting side by side watching the ocean",
+    "panel_9": "neon-lit city night portrait, the girl pointing toward the camera"
+  }
+}

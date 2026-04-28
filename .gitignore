@@ -1,0 +1,23 @@
+# 生成结果
+history/
+output/
+template/*/history/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDE
+.vscode/
+.idea/
+
+# 临时文件
+*.tmp
+*.log
+*.bak
+
+# 配置（包含敏感信息）
+# config.json 需要用户自行配置

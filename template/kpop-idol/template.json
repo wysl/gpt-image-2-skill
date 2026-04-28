@@ -1,0 +1,100 @@
+{
+  "subject": {
+    "描述": "以[idol_name]为主体的韩流偶像风格写真",
+    "类型": "韩国偶像艺人宣传照",
+    "风格": "K-pop idol aesthetic"
+  },
+  "style": {
+    "风格": "韩流偶像写真",
+    "特征": [
+      "舞台级妆发",
+      "专辑封面质感",
+      "偶像气场",
+      "时尚潮流"
+    ]
+  },
+  "idol": {
+    "角色": "[idol_name]",
+    "团体": "[idol_group]",
+    "外貌": "[idol_appearance]",
+    "妆发": "[idol_makeup_hair]",
+    "服装": "[idol_costume]",
+    "概念": "[idol_concept]"
+  },
+  "pose": {
+    "姿态": [
+      "[pose_type]",
+      "偶像标志性动作",
+      "舞台表现力",
+      "自信眼神"
+    ]
+  },
+  "environment": {
+    "背景": "[background_type]",
+    "风格": [
+      "专辑封面风格",
+      "舞台灯光效果",
+      "韩式渐变背景"
+    ]
+  },
+  "composition": {
+    "构图": [
+      "竖版偶像照 (9:16)",
+      "中近景特写",
+      "偶像气场构图"
+    ]
+  },
+  "lighting": {
+    "灯光": [
+      "[lighting_effect]",
+      "舞台灯光",
+      "高对比度",
+      "韩式亮光风格"
+    ]
+  },
+  "color": {
+    "色调": "[color_theme]",
+    "特征": [
+      "韩式配色",
+      "偶像概念色",
+      "时尚潮流色"
+    ]
+  },
+  "typography": {
+    "排版逻辑": "不添加默认文字，仅保留简洁的排版框架",
+    "层级": []
+  },
+  "mood": {
+    "氛围": [
+      "[mood_type]",
+      "偶像气场",
+      "自信",
+      "舞台魅力"
+    ]
+  },
+  "negative": {
+    "避免": [
+      "文字重复",
+      "阴影过重",
+      "非偶像风格",
+      "低质量渲染"
+    ]
+  },
+  "quality": "high",
+  "longest side": "3840",
+  "aspect_ratio": "9:16",
+  "defaults": {
+    "idol_name": "偶像",
+    "idol_group": "K-pop女团",
+    "idol_appearance": "精致五官，白皙肌肤，纤瘦身材，青春华丽",
+    "idol_makeup_hair": "华丽舞台妆容，渐变发色长发，造型打理精致",
+    "idol_costume": "时尚偶像打歌服，亮片装饰，展现身材",
+    "idol_concept": "清纯性感并存",
+    "pose_type": "自然站姿微侧身，自信眼神直视镜头",
+    "background_type": "韩式渐变舞台背景或单色摄影棚",
+    "lighting_effect": "柔光箱布光，韩式高亮",
+    "color_theme": "粉色系韩式配色",
+    "mood_type": "自信华丽"
+  },
+  "default_size": "2160x3840"
+}

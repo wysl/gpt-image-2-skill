@@ -1,0 +1,28 @@
+{
+  "endpoints": [
+    {
+      "name": "88996.cloud",
+      "model": "gpt-image-2",
+      "priority": 1,
+      "timeout": 500,
+      "enabled": true
+    },
+    {
+      "name": "bltcy.ai",
+      "model": "gpt-image-2",
+      "priority": 2,
+      "timeout": 500,
+      "enabled": true
+    },
+    {
+      "name": "xflow",
+      "model": "gpt-image-2",
+      "priority": 3,
+      "timeout": 500,
+      "enabled": true
+    }
+  ],
+  "default_model": "gpt-image-2",
+  "retry_count": 1,
+  "note": "请在使用前配置您的 API url 和 key"
+}

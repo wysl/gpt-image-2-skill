@@ -1,0 +1,300 @@
+{
+  "subject": {
+    "描述": "以[title]为主题的视频设计方案/Pitch Deck，副标题: [subtitle]",
+    "类型": "电影工业标准视觉提案"
+  },
+  "project": {
+    "类型": "[video_type]",
+    "预计时长": "[duration]",
+    "风格": "[genre]",
+    "目标受众": "[target_audience]"
+  },
+  "story": {
+    "一句话梗概": "[one_line_synopsis]",
+    "核心冲突": "[core_conflict]",
+    "情感曲线": "[emotional_arc]"
+  },
+  "style": {
+    "风格": "专业Pitch Deck风格",
+    "特征": [
+      "黑底金字高端排版",
+      "电影感视觉冲击",
+      "清晰网格布局",
+      "信息密度适中"
+    ]
+  },
+  "visual_style": {
+    "整体风格": "[visual_style]",
+    "参考影片": "[film_refs]",
+    "时代设定": "[period_setting]"
+  },
+  "layout": {
+    "结构": [
+      "顶部: 项目标题 + 副标题",
+      "左侧上: 角色设定区",
+      "中部上: 核心场景大图",
+      "左侧下: 故事板分镜区",
+      "中部下: 运镜流程图",
+      "右侧上: 色彩方案色卡",
+      "右侧中: 灯光氛围参考",
+      "底部: 参考影像画廊"
+    ]
+  },
+  "characters": {
+    "女主": {
+      "角色": "[female_char]",
+      "年龄": "[female_age]",
+      "身份": "[female_role]",
+      "外貌": "[female_appearance]",
+      "关键词": "[female_keywords]",
+      "服装": "[female_costume]",
+      "三视图": "[female_turnaround]"
+    },
+    "男主": {
+      "角色": "[male_char]",
+      "年龄": "[male_age]",
+      "身份": "[male_role]",
+      "外貌": "[male_appearance]",
+      "关键词": "[male_keywords]",
+      "服装": "[male_costume]",
+      "三视图": "[male_turnaround]"
+    }
+  },
+  "costume": {
+    "关键道具": "[key_props]"
+  },
+  "scene": {
+    "核心场景": "[core_scene]",
+    "氛围": "[scene_mood]",
+    "时间": "[time_of_day]"
+  },
+  "environment": {
+    "季节": "[season]",
+    "天气": "[weather]",
+    "特效": "[weather_effect]"
+  },
+  "storyboard": {
+    "帧数": "6-8帧关键分镜",
+    "流程": "[story_flow]",
+    "关键对白": "[key_dialogue]"
+  },
+  "camera": {
+    "运镜流程": [
+      "建立环境",
+      "推进主体",
+      "环绕/切换",
+      "对话镜头",
+      "最终定格"
+    ],
+    "风格": "[camera_style]",
+    "关键镜头": "[key_shot_types]",
+    "转场方式": "[transition_style]"
+  },
+  "pacing": {
+    "整体节奏": "[overall_pacing]",
+    "情感高潮": "[emotional_peak]",
+    "开场方式": "[opening_style]",
+    "结尾方式": "[ending_style]"
+  },
+  "color": {
+    "色卡": [
+      {
+        "颜色": "[color1_name]",
+        "色值": "[color1_hex]",
+        "用途": "[color1_use]"
+      },
+      {
+        "颜色": "[color2_name]",
+        "色值": "[color2_hex]",
+        "用途": "[color2_use]"
+      },
+      {
+        "颜色": "[color3_name]",
+        "色值": "[color3_hex]",
+        "用途": "[color3_use]"
+      },
+      {
+        "颜色": "[color4_name]",
+        "色值": "[color4_hex]",
+        "用途": "[color4_use]"
+      }
+    ],
+    "整体基调": "[color_mood]"
+  },
+  "lighting": {
+    "灯光风格": "[lighting_style]",
+    "特征": [
+      "[light_feature1]",
+      "[light_feature2]",
+      "[light_feature3]"
+    ]
+  },
+  "audio": {
+    "音乐风格": "[music_genre]",
+    "环境音": "[ambient_sound]",
+    "关键音效": "[key_sound_effects]"
+  },
+  "reference": {
+    "参考元素": [
+      "[ref1]",
+      "[ref2]",
+      "[ref3]",
+      "[ref4]"
+    ]
+  },
+  "typography": {
+    "排版逻辑": "电影工业标准，主题文字可用日语/英语，非主题文字使用中文",
+    "层级": [
+      {
+        "层级": 1,
+        "内容": "主标题 - [title]",
+        "字体": "高对比纤细衬线体或英文大写"
+      },
+      {
+        "层级": 2,
+        "内容": "副标题 - [subtitle]",
+        "字体": "中等字重中文黑体"
+      },
+      {
+        "层级": 3,
+        "内容": "角色名/场景名",
+        "字体": "细中文宋体"
+      },
+      {
+        "层级": 4,
+        "内容": "分镜说明/对话内容",
+        "字体": "中文细黑体"
+      }
+    ],
+    "系统": "基于网格系统的专业版式设计"
+  },
+  "multi_panel": {
+    "模式": "3panel",
+    "说明": "标准3张图拆分方案，确保角色一致性",
+    "拆分规则": {
+      "panel_1": {
+        "标题": "角色设计 + 故事板分镜",
+        "包含": ["角色设计（含三视图）", "故事板分镜"],
+        "禁止": ["色彩方案色卡", "物品道具插画", "项目信息"],
+        "人物": "有（唯一一张包含人物）",
+        "排版要求": {
+          "布局": "优雅网格布局，清晰视觉层级",
+          "角色展示": "三视图作为优雅参考条带",
+          "故事板": "清晰2x4或3x3网格排列",
+          "装饰": "装饰性边框和分隔线",
+          "间距": "元素间均衡间距",
+          "风格": "高端杂志级构图"
+        },
+        "prompt模板": "Page 1 - CHARACTER DESIGN & STORYBOARD\n\n=== 角色设定 ===\n女主信息 + 三视图（优雅展示）\n男主信息 + 三视图（优雅展示）\n\n=== 故事板分镜 ===\n流程与对白（网格排列）\n\nLayout: Elegant grid, decorative borders, balanced spacing, magazine-quality\nStyle: 仅人物与分镜，无色彩方案，无道具插画，美观排版"
+      },
+      "panel_2": {
+        "标题": "项目信息 + 道具插画 + 抽象分镜 + 情感曲线",
+        "包含": ["项目信息", "物品道具插画", "抽象分镜", "情感曲线", "运镜图表"],
+        "禁止": ["人物插画", "场景插画"],
+        "人物": "无",
+        "场景": "无",
+        "道具": "有插画（孤立展示，无人物手持）",
+        "配图": {
+          "道具插画": "产品级孤立展示，无手持",
+          "流程图": "优雅箭头和阶段指示",
+          "情感曲线": "波浪/正弦曲线可视化",
+          "运镜图表": "抽象镜头示意图",
+          "图标": "装饰性图标和抽象符号"
+        },
+        "prompt模板": "Page 2 - PROJECT INFO & PROPS & VISUAL STRUCTURE\n\n=== 项目信息 ===\n类型/时长/风格/受众\n\n=== 道具插画 ===\n孤立展示，无人物，产品级构图\n\n=== 抽象分镜 ===\n流程图/阶段（优雅箭头）\n\n=== 情感曲线 ===\n波浪可视化\n\n=== 运镜图表 ===\n抽象镜头示意图\n\nLayout: Balanced grid with visual interest, prop illustrations, diagrams\nStyle: 有道具插画（孤立），无人物，无场景，美观丰富"
+      },
+      "panel_3": {
+        "标题": "色彩 + 灯光 + 声音 + 参考",
+        "包含": ["色彩方案色卡", "灯光设计图", "声音设计面板", "参考画廊（抽象）"],
+        "禁止": ["人物插画", "场景插画"],
+        "人物": "无",
+        "场景": "无",
+        "配图": {
+          "色卡": "4色优雅展示",
+          "灯光": "抽象光线示意图",
+          "声音": "音频波形/频谱图",
+          "参考": "抽象情绪指示器"
+        },
+        "prompt模板": "Page 3 - COLOR & LIGHTING & AUDIO\n\n=== 色彩方案 ===\n色卡（优雅展示）\n\n=== 灯光设计 ===\n抽象光线示意图\n\n=== 声音设计 ===\n音频波形图\n\n=== 参考画廊 ===\n抽象情绪指示\n\nStyle: 纯技术设计（带图表），无人物，无场景"
+      }
+    },
+    "约束": {
+      "角色一致性": "所有人物形象在panel_1中统一生成",
+      "信息分离": "色彩/灯光/声音与人物/场景分开",
+      "道具分离": "物品道具插画在panel_2（孤立展示）",
+      "排版美观": "每页都要求美观排版和均衡布局"
+    }
+  },
+  "defaults": {
+    "title": "视频方案名称",
+    "subtitle": "项目副标题",
+    "genre": "剧情/爱情",
+    "duration": "90分钟",
+    "one_line_synopsis": "一个关于爱与成长的故事",
+    "core_conflict": "主角在理想与现实之间的挣扎",
+    "emotional_arc": "从迷茫到坚定",
+    "emotional_peak": "第三幕高潮重逢",
+    "opening_style": "倒叙开场，温暖怀旧",
+    "ending_style": "开放式结局，留下余韵",
+    "story_flow": "三幕式叙事：相遇→冲突→成长",
+    "period_setting": "现代都市",
+    "season": "春夏之交",
+    "time_of_day": "日与夜的交替",
+    "weather": "晴转多云",
+    "weather_effect": "偶尔飘落的樱花",
+    "visual_style": "电影感写实风格",
+    "camera_style": "手持拍摄与稳定镜头交替",
+    "overall_pacing": "前舒缓、中紧凑、后深情",
+    "transition_style": "溶解转场加黑场",
+    "target_audience": "15-35岁年轻观众",
+    "video_type": "电影/网剧",
+    "male_char": "男主角",
+    "male_age": "25",
+    "male_role": "主角",
+    "male_appearance": "身高178cm，五官立体，短发，气质阳光",
+    "male_costume": "休闲风格，白色T恤配夹克",
+    "male_keywords": "阳光、坚毅、温柔",
+    "male_turnaround": "三视图",
+    "female_char": "女主角",
+    "female_age": "23",
+    "female_role": "女主角",
+    "female_appearance": "身高165cm，黑长直，清秀面容",
+    "female_costume": "简约连衣裙配风衣",
+    "female_keywords": "温柔、坚定、神秘",
+    "female_turnaround": "三视图",
+    "core_scene": "日落时分的城市天台",
+    "scene_mood": "浪漫而略带忧伤",
+    "key_props": "相机、旧照片、笔记本",
+    "key_dialogue": "「有些路，总要一个人走」",
+    "key_shot_types": "特写、中景、远景交替",
+    "key_sound_effects": "环境音：风声、雨声、车辆声",
+    "ambient_sound": "城市环境音",
+    "music_genre": "钢琴弦乐配乐",
+    "color_mood": "暖黄色调为主，冷蓝用于回忆",
+    "color1_name": "琥珀黄",
+    "color1_hex": "#F5C242",
+    "color1_use": "主色调，温暖回忆感",
+    "color2_name": "深海蓝",
+    "color2_hex": "#1A3A5C",
+    "color2_use": "冷调对比，回忆与现实的切换",
+    "color3_name": "柔粉",
+    "color3_hex": "#E8A0B4",
+    "color3_use": "浪漫氛围点缀",
+    "color4_name": "雾白",
+    "color4_hex": "#F0EDE8",
+    "color4_use": "基础底色",
+    "lighting_style": "自然光为主，后期调色",
+    "light_feature1": "逆光勾勒轮廓",
+    "light_feature2": "柔光箱面光",
+    "light_feature3": "暖色夜灯场景光",
+    "ref1": "参考片A",
+    "ref2": "参考片B",
+    "ref3": "参考片C",
+    "ref4": "参考片D",
+    "film_refs": "参考片单"
+  },
+  "quality": "high",
+  "aspect_ratio": "9:16",
+  "longest_side": "2560",
+  "default_size": "1440x2560"
+}

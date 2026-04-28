@@ -1,0 +1,148 @@
+{
+  "defaults": {
+    "street_location": "便利店门口的霓虹灯街",
+    "city_name": "东京",
+    "district_type": "繁华商业区",
+    "style_type": "电影质感街拍，赛博朋克氛围",
+    "focal_length": "50mm",
+    "aperture": "f/1.4",
+    "angle_of_view": "正面视角",
+    "depth_of_field": "浅景深，霓虹背景虚化",
+    "main_subject": "一位20岁东亚美女，精致小圆脸，大眼睛深褐色，清透日系妆容，粉色腮红扫在苹果肌和鼻尖，高马尾配粉紫色发圈，额前几缕碎发修饰脸型，身材苗条匀称",
+    "subject_type": "年轻女性，时尚风格",
+    "subject_pose": "倚靠在便利店玻璃门旁，身体微侧，背部轻倚玻璃，神情淡然清冷，直视镜头，嘴唇微启",
+    "interaction_type": "与镜头的安静互动",
+    "time_of_day": "夜晚",
+    "weather": "夜晚晴朗",
+    "atmosphere_type": "都市夜生活的赛博朋克氛围",
+    "mood": "清冷神秘，安静迷人",
+    "story_element": "霓虹灯下的都市邂逅",
+    "moment_type": "安静凝视的瞬间",
+    "lighting_condition": "混合光源，便利店冷白光与霓虹灯光",
+    "light_direction": "侧面霓虹灯照射",
+    "light_quality": "柔和冷暖对比，轮廓光",
+    "light_color_temp": "粉色与蓝色霓虹灯",
+    "composition_style": "中景构图，人物中心偏右",
+    "camera_angle": "平视",
+    "frame_element": "玻璃门框线条分割",
+    "leading_lines": "垂直玻璃框线条",
+    "color_palette": "黑白肤色为主，粉色蓝色霓虹点缀",
+    "contrast_level": "中等对比度",
+    "saturation_level": "背景高饱和，人物自然",
+    "processing_style": "电影质感，轻微颗粒",
+    "grain_level": "轻微颗粒感",
+    "bw_toggle": "否，保持彩色"
+  },
+  "clothing": {
+    "上装": "白色宽松版型长袖衬衫，领口纽扣解开几颗形成V领，袖子随意卷起，下摆在腰部中心打结成露脐装",
+    "下装": "黑色高腰百褶超短裙（网球裙风格），侧边白色抽绳系带",
+    "风格": "日韩系时尚，黑白对比，青春活力"
+  },
+  "makeup": {
+    "风格": "日韩系清透妆容",
+    "特点": [
+      "腮红扫在苹果肌及鼻尖，呈现微醺感",
+      "淡粉色或珊瑚色唇彩",
+      "干净眼妆",
+      "皮肤白皙细腻"
+    ]
+  },
+  "subject": {
+    "描述": "以[street_location]为场景的街头摄影作品",
+    "类型": "street photography 街拍",
+    "风格": "[style_type]"
+  },
+  "style": {
+    "风格": "街头摄影风格",
+    "特征": [
+      "纪实感",
+      "自然光影",
+      "瞬间捕捉",
+      "城市氛围"
+    ]
+  },
+  "camera": {
+    "焦段": "[focal_length]",
+    "光圈": "[aperture]",
+    "视角": "[angle_of_view]",
+    "景深": "[depth_of_field]",
+    "说明": {
+      "24mm-35mm": "广角街拍，环境感强，适合场景叙事",
+      "50mm": "标准街拍，自然视角，适合人物与环境平衡",
+      "85mm-135mm": "长焦街拍，人物突出，适合肖像式街拍"
+    },
+    "光圈效果": {
+      "f/1.4-f/2.8": "浅景深，人物突出，背景虚化",
+      "f/4-f/5.6": "中等景深，人物与环境兼顾",
+      "f/8-f/11": "大景深，场景清晰，适合环境叙事"
+    }
+  },
+  "scene": {
+    "地点": "[street_location]",
+    "城市": "[city_name]",
+    "区域": "[district_type]",
+    "时间": "[time_of_day]",
+    "天气": "[weather]"
+  },
+  "subject_content": {
+    "主体": "[main_subject]",
+    "类型": "[subject_type]",
+    "姿态": "[subject_pose]",
+    "互动": "[interaction_type]"
+  },
+  "atmosphere": {
+    "氛围": "[atmosphere_type]",
+    "情绪": "[mood]",
+    "故事感": "[story_element]",
+    "瞬间": "[moment_type]"
+  },
+  "lighting": {
+    "光线": "[lighting_condition]",
+    "方向": "[light_direction]",
+    "质感": "[light_quality]",
+    "色彩": "[light_color_temp]"
+  },
+  "composition": {
+    "构图": "[composition_style]",
+    "视角": "[camera_angle]",
+    "框架": "[frame_element]",
+    "线条": "[leading_lines]"
+  },
+  "color": {
+    "色调": "[color_palette]",
+    "对比度": "[contrast_level]",
+    "饱和度": "[saturation_level]"
+  },
+  "post_processing": {
+    "风格": "[processing_style]",
+    "颗粒": "[grain_level]",
+    "黑白": "[bw_toggle]"
+  },
+  "typography": {
+    "排版逻辑": "街头摄影风格，简洁标注",
+    "层级": [
+      {
+        "层级": 1,
+        "内容": "地点标注",
+        "字体": "细黑体"
+      },
+      {
+        "层级": 2,
+        "内容": "拍摄参数（焦段/光圈）",
+        "字体": "英文细体"
+      }
+    ]
+  },
+  "negative": {
+    "避免": [
+      "过度后期",
+      "人为摆拍",
+      "构图杂乱",
+      "失焦模糊"
+    ]
+  },
+  "quality": "high",
+  "longest side": "3840",
+  "aspect_ratio": "9:16",
+  "default_size": "2160x3840"
+}
