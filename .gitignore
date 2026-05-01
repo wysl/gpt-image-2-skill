@@ -2,7 +2,7 @@
 config.json
 
 # 发布用示例配置
-config.json.example
+!config.json.example
 
 # History 记录
 history/
