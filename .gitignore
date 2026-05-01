@@ -8,11 +8,6 @@ config.json.example
 history/
 template/*/history/
 
-# Output 文件（由脚本生成）
-*.png
-*.jpg
-*.webp
-
 # Python
 __pycache__/
 *.pyc
