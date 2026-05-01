@@ -22,16 +22,25 @@ from datetime import datetime
 
 # 目录配置
 SKILL_DIR = Path(__file__).parent.resolve()
-OUTPUT_DIR = SKILL_DIR / "output"
 HISTORY_DIR = SKILL_DIR / "history"
 CONFIG_FILE = SKILL_DIR / "config.json"
 TEMPLATE_DIR = SKILL_DIR / "template"
+DEFAULT_OUTPUT_DIR = "~/.hermes/output/gpt-image-2"
 
 
 def resolve_history_dir(template_name=None):
     if template_name:
         return TEMPLATE_DIR / template_name / "history"
     return HISTORY_DIR
+
+
+def resolve_output_dir(template_name=None):
+    """解析输出目录：从 config.json 读取 output_dir，按模板/普通模式分流。"""
+    config = load_config()
+    base = Path(config.get('output_dir', DEFAULT_OUTPUT_DIR)).expanduser()
+    if template_name:
+        return base / template_name
+    return base / 'normal'
 
 # 全局配置
 CONFIG = None
@@ -223,12 +232,13 @@ def save_history(payload, response_data, timestamp, history_dir=None):
         json.dump(history, f, indent=2, ensure_ascii=False)
     return history_file
 
-def generate_image(prompt, size="1024x1536", quality="high", n=1, output=None, timeout_override=None, history_dir=None):
+def generate_image(prompt, size="1024x1536", quality="high", n=1, output=None, timeout_override=None, history_dir=None, template_name=None):
     """基础图片生成"""
     validate_size(size)
     
     # 确保输出目录存在
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    out_dir = resolve_output_dir(template_name)
+    out_dir.mkdir(parents=True, exist_ok=True)
     history_dir = history_dir or HISTORY_DIR
     history_dir.mkdir(parents=True, exist_ok=True)
     
@@ -237,11 +247,11 @@ def generate_image(prompt, size="1024x1536", quality="high", n=1, output=None, t
     
     # 默认输出文件名
     if output is None:
-        output = OUTPUT_DIR / f"{timestamp}.png"
+        output = out_dir / f"{timestamp}.png"
     else:
         # 如果用户指定了路径，检查是否是相对路径
         if not Path(output).is_absolute():
-            output = OUTPUT_DIR / output
+            output = out_dir / output
     
     # API payload - 使用 b64_json 格式
     payload = {
@@ -294,7 +304,7 @@ def generate_image(prompt, size="1024x1536", quality="high", n=1, output=None, t
             print(f"Error: No url or b64_json in response")
             sys.exit(1)
         
-        filename = str(output) if n == 1 else str(OUTPUT_DIR / f"{timestamp}_{i+1}.png")
+        filename = str(output) if n == 1 else str(out_dir / f"{timestamp}_{i+1}.png")
         
         with open(filename, 'wb') as f:
             f.write(img_bytes)
@@ -303,20 +313,21 @@ def generate_image(prompt, size="1024x1536", quality="high", n=1, output=None, t
     
     return True
 
-def edit_image(images, prompt, size="1024x1536", quality="high", output=None, timeout_override=None, history_dir=None):
+def edit_image(images, prompt, size="1024x1536", quality="high", output=None, timeout_override=None, history_dir=None, template_name=None):
     """图片编辑（使用 multipart/form-data 格式）"""
     
     # 确保输出目录存在
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    out_dir = resolve_output_dir(template_name)
+    out_dir.mkdir(parents=True, exist_ok=True)
     history_dir = history_dir or HISTORY_DIR
     history_dir.mkdir(parents=True, exist_ok=True)
     
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     
     if output is None:
-        output = OUTPUT_DIR / f"{timestamp}.png"
+        output = out_dir / f"{timestamp}.png"
     elif not Path(output).is_absolute():
-        output = OUTPUT_DIR / output
+        output = out_dir / output
     
     # 准备 multipart 数据
     files_data = []
@@ -375,20 +386,21 @@ def edit_image(images, prompt, size="1024x1536", quality="high", output=None, ti
     print(f"  Saved: {output} ({len(img_bytes)} bytes)")
     return True
 
-def inpaint_image(image_path, mask_path, prompt, size="1024x1024", quality="high", output=None, timeout_override=None, history_dir=None):
+def inpaint_image(image_path, mask_path, prompt, size="1024x1024", quality="high", output=None, timeout_override=None, history_dir=None, template_name=None):
     """局部重绘（蒙版编辑）- 使用 multipart/form-data 格式"""
     
     # 确保输出目录存在
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    out_dir = resolve_output_dir(template_name)
+    out_dir.mkdir(parents=True, exist_ok=True)
     history_dir = history_dir or HISTORY_DIR
     history_dir.mkdir(parents=True, exist_ok=True)
     
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     
     if output is None:
-        output = OUTPUT_DIR / f"{timestamp}.png"
+        output = out_dir / f"{timestamp}.png"
     elif not Path(output).is_absolute():
-        output = OUTPUT_DIR / output
+        output = out_dir / output
     
     # 准备 multipart 数据
     with open(image_path, 'rb') as img_f:
@@ -476,7 +488,7 @@ def main():
                         help='图片质量：high（固定使用高质量）')
     parser.add_argument('--n', type=int, default=1, choices=range(1, 5),
                         help='生成数量（1-4）')
-    parser.add_argument('--output', default=None, help='输出文件名（默认保存到 output/ 目录）')
+    parser.add_argument('--output', default=None, help='输出文件名（默认保存到 output_dir/模板名/ 或 output_dir/normal/ 目录）')
     parser.add_argument('--timeout', type=int, default=500, help='临时覆盖当前请求超时（秒），默认 500 秒；不修改 config.json')
     
     # 编辑模式参数
@@ -543,6 +555,7 @@ def main():
             output=args.output,
             timeout_override=args.timeout,
             history_dir=history_dir,
+            template_name=args.template,
         )
     
     elif args.mode == 'edit':
@@ -558,6 +571,7 @@ def main():
             output=args.output,
             timeout_override=args.timeout,
             history_dir=history_dir,
+            template_name=args.template,
         )
     
     elif args.mode == 'composite':
@@ -576,6 +590,7 @@ def main():
             output=args.output,
             timeout_override=args.timeout,
             history_dir=history_dir,
+            template_name=args.template,
         )
     
     elif args.mode == 'inpaint':
@@ -591,6 +606,7 @@ def main():
             output=args.output,
             timeout_override=args.timeout,
             history_dir=history_dir,
+            template_name=args.template,
         )
 
 if __name__ == '__main__':

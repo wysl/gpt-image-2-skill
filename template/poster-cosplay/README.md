@@ -6,9 +6,9 @@
 - 固定入口：`run.py`
 
 ## 目录规则
-- 模板 history 存放位置：`/root/.openclaw/skills/gpt-image-2/template/poster-cosplay/history/`
-- 图片 output 存放位置：`/root/.openclaw/skills/gpt-image-2/output/`
-- 也就是说：**history 按模板分流，output 仍然统一落在 skill 根目录**
+- 模板 history 存放位置：`template/poster-cosplay/history/`
+- 图片 output 存放位置：`~/.hermes/output/gpt-image-2/poster-cosplay/`
+- output 目录可在 `config.json` 的 `output_dir` 字段中自定义
 
 ## 默认信息
 - 模板显示名：Cosplay角色海报
@@ -31,7 +31,7 @@
 
 ## 推荐调用
 ```bash
-cd /root/.openclaw/skills/gpt-image-2/template/poster-cosplay
+cd template/poster-cosplay
 python3 run.py --vars '{"xxx":"莎赫拉查德 Code S from Brown Dust 2"}' --output poster.png --timeout 500
 ```
 

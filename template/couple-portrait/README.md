@@ -6,9 +6,9 @@
 - 固定入口：`run.py`
 
 ## 目录规则
-- 模板 history 存放位置：`/root/.openclaw/skills/gpt-image-2/template/couple-portrait/history/`
-- 图片 output 存放位置：`/root/.openclaw/skills/gpt-image-2/output/`
-- 也就是说：**history 按模板分流，output 仍然统一落在 skill 根目录**
+- 模板 history 存放位置：`template/couple-portrait/history/`
+- 图片 output 存放位置：`~/.hermes/output/gpt-image-2/couple-portrait/`
+- output 目录可在 `config.json` 的 `output_dir` 字段中自定义
 
 ## 默认信息
 - 模板显示名：couple-portrait
@@ -37,7 +37,7 @@
 
 ## 推荐调用
 ```bash
-cd /root/.openclaw/skills/gpt-image-2/template/couple-portrait
+cd template/couple-portrait
 python3 run.py --vars '{"subject_name":"Ava & Leo"}' --output couple.png --timeout 500
 ```
 

@@ -6,19 +6,19 @@
 
 <table>
 <tr>
-<td align="center"><img src="output/poster-cosplay-example.png" width="300" height="400"><br><b>Cosplay角色海报</b></td>
-<td align="center"><img src="output/video-pitch-example.png" width="300" height="400"><br><b>Pitch Deck 3联拼贴</b></td>
-<td align="center"><img src="output/portrait-photography-example.png" width="300" height="400"><br><b>人像摄影</b></td>
+<td align="center"><img src="example/poster-cosplay-example.png" width="300" height="400"><br><b>Cosplay角色海报</b></td>
+<td align="center"><img src="example/video-pitch-example.png" width="300" height="400"><br><b>Pitch Deck 3联拼贴</b></td>
+<td align="center"><img src="example/portrait-photography-example.png" width="300" height="400"><br><b>人像摄影</b></td>
 </tr>
 <tr>
-<td align="center"><img src="output/couple-portrait-example.png" width="300" height="400"><br><b>情侣双人写真</b></td>
-<td align="center"><img src="output/kpop-idol-example.png" width="300" height="400"><br><b>K-pop偶像写真</b></td>
-<td align="center"><img src="output/street-photography-example.png" width="300" height="400"><br><b>街头摄影</b></td>
+<td align="center"><img src="example/couple-portrait-example.png" width="300" height="400"><br><b>情侣双人写真</b></td>
+<td align="center"><img src="example/kpop-idol-example.png" width="300" height="400"><br><b>K-pop偶像写真</b></td>
+<td align="center"><img src="example/street-photography-example.png" width="300" height="400"><br><b>街头摄影</b></td>
 </tr>
 <tr>
-<td align="center"><img src="output/bedroom-mirror-selfie-example.png" width="300" height="400"><br><b>卧室镜自拍</b></td>
-<td align="center"><img src="output/person-photoshoot-3x3-example.png" width="300" height="400"><br><b>人物写真九宫格</b></td>
-<td align="center"><img src="output/anime-date-collage-3x3-example.png" width="300" height="400"><br><b>动漫少女与真人约会拼贴</b></td>
+<td align="center"><img src="example/bedroom-mirror-selfie-example.png" width="300" height="400"><br><b>卧室镜自拍</b></td>
+<td align="center"><img src="example/person-photoshoot-3x3-example.png" width="300" height="400"><br><b>人物写真九宫格</b></td>
+<td align="center"><img src="example/anime-date-collage-3x3-example.png" width="300" height="400"><br><b>动漫少女与真人约会拼贴</b></td>
 </tr>
 </table>
 
@@ -32,7 +32,7 @@ gpt-image-2-skill/
 ├── generate.py           # 通用入口脚本
 ├── README.md             # 本文档
 ├── SKILL.md              # Skill 说明文档
-├── output/               # 示例图片
+├── example/              # 示例图片
 ├── docs/                 # 详细文档
 │   ├── basic.md          # 基础用法
 │   └── advanced.md       # 高级用法
@@ -139,7 +139,7 @@ python3 template/poster-cosplay/run.py \
 ```
 
 **输出**：
-- 图片：`output/poster.png`
+- 图片：`~/.hermes/output/gpt-image-2/poster-cosplay/poster.png`
 - History：`template/poster-cosplay/history/YYYYMMDD-HHMMSS.json`
 
 ---
@@ -154,10 +154,10 @@ python3 template/video-pitch/generate_pitchdeck.py \
 ```
 
 **输出**：
-- `output/my_pitch-panel-1.png`（角色设计+故事板）
-- `output/my_pitch-panel-2.png`（项目信息+道具插画）
-- `output/my_pitch-panel-3.png`（色彩+灯光+声音）
-- `output/my_pitch-full-pitchdeck.png`（拼接版）
+- `~/.hermes/output/gpt-image-2/video-pitch/my_pitch-panel-1.png`（角色设计+故事板）
+- `~/.hermes/output/gpt-image-2/video-pitch/my_pitch-panel-2.png`（项目信息+道具插画）
+- `~/.hermes/output/gpt-image-2/video-pitch/my_pitch-panel-3.png`（色彩+灯光+声音）
+- `~/.hermes/output/gpt-image-2/video-pitch/my_pitch-full-pitchdeck.png`（拼接版）
 
 ---
 
@@ -251,18 +251,20 @@ python3 template/anime-girl-and-man-date-photo-collage-3x3/run.py \
 
 ### Output 存储位置
 
-- **所有图片统一**：`output/`（根目录）
+- **通用 prompt 生成的图片**：`~/.hermes/output/gpt-image-2/normal/`
+- **模板生成的图片**：`~/.hermes/output/gpt-image-2/<template-name>/`
+- output 目录可在 `config.json` 的 `output_dir` 字段中自定义
 
 ### 示例
 
 ```
 # 模板调用
 template/poster-cosplay/history/20260428-123456.json
-output/poster.png
+~/.hermes/output/gpt-image-2/poster-cosplay/poster.png
 
 # 通用 prompt
 history/20260428-123456.json
-output/20260428-123456.png
+~/.hermes/output/gpt-image-2/normal/20260428-123456.png
 ```
 
 ## 高级功能
@@ -407,7 +409,7 @@ pip install requests Pillow
 - 模板目录化重构
 - 9个模板独立目录
 - history 按模板分目录存储
-- output 统一放在根目录
+- output 统一放在 ~/.hermes/output/gpt-image-2/ 下，按模板/normal 分目录
 - 修复 combine_panels.py 和 generate_pitchdeck.py 路径问题
 - 添加示例图片预览
 

@@ -25,9 +25,22 @@ import subprocess
 import sys
 from pathlib import Path
 
-SKILL_DIR = Path(__file__).parent.resolve()
-OUTPUT_DIR = SKILL_DIR / "output"
-TEMPLATE_DIR = SKILL_DIR / "template"
+TEMPLATE_DIR = Path(__file__).parent.resolve()
+SKILL_DIR = TEMPLATE_DIR.parent.parent
+CONFIG_FILE = SKILL_DIR / "config.json"
+DEFAULT_OUTPUT_DIR = "~/.hermes/output/gpt-image-2"
+
+
+def resolve_output_dir():
+    """从 config.json 读取 output_dir，返回 video-pitch 模板子目录。"""
+    import json
+    try:
+        with open(CONFIG_FILE) as f:
+            config = json.load(f)
+    except Exception:
+        config = {}
+    base = Path(config.get('output_dir', DEFAULT_OUTPUT_DIR)).expanduser()
+    return base / "video-pitch"
 
 
 def build_panel_1_prompt(vars_dict):
@@ -338,10 +351,9 @@ Style: Professional pitch deck, color swatches layout, lighting mood board, audi
 def generate_panel(prompt, output_name, size="1440x2560", timeout=500):
     """调用 generate.py 生成单张图片"""
     
-    ROOT_DIR = SKILL_DIR.parent.parent  # skill 根目录
     cmd = [
         "python3",
-        str(ROOT_DIR / "generate.py"),
+        str(SKILL_DIR / "generate.py"),
         "--template", "video-pitch",  # 添加模板参数，让 history 保存到模板目录
         "--prompt", prompt,
         "--size", size,
@@ -351,7 +363,7 @@ def generate_panel(prompt, output_name, size="1440x2560", timeout=500):
     ]
     
     print(f"Generating: {output_name}")
-    result = subprocess.run(cmd, cwd=str(ROOT_DIR), capture_output=True, text=True)
+    result = subprocess.run(cmd, cwd=str(SKILL_DIR), capture_output=True, text=True)
     
     if result.returncode != 0:
         print(f"Error: {result.stderr}")
@@ -381,12 +393,12 @@ def combine_panels(prefix, labels, timeout=500):
         return None
     
     print(f"Combined: {prefix}-full-pitchdeck.png")
-    return OUTPUT_DIR / f"{prefix}-full-pitchdeck.png"
+    return resolve_output_dir() / f"{prefix}-full-pitchdeck.png"
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="video-pitch / generate_pitchdeck：生成多 panel pitch deck（history 在模板目录，图片 output 在 skill 根目录）"
+        description="video-pitch / generate_pitchdeck：生成多 panel pitch deck（history 在模板目录，图片 output 在 ~/.hermes/output/gpt-image-2/video-pitch/）"
     )
     parser.add_argument("--vars", type=str, required=True, help="变量JSON字符串")
     parser.add_argument("--prefix", type=str, default="pitch", help="输出文件前缀")

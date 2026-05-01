@@ -17,9 +17,22 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 # 目录配置
-SKILL_DIR = Path(__file__).parent.resolve()
-ROOT_DIR = SKILL_DIR.parent.parent  # skill 根目录
-OUTPUT_DIR = ROOT_DIR / "output"  # 统一使用 skill 根目录 output
+TEMPLATE_DIR = Path(__file__).parent.resolve()
+SKILL_DIR = TEMPLATE_DIR.parent.parent  # skill 根目录
+CONFIG_FILE = SKILL_DIR / "config.json"
+DEFAULT_OUTPUT_DIR = "~/.hermes/output/gpt-image-2"
+
+
+def resolve_output_dir():
+    """从 config.json 读取 output_dir，返回 video-pitch 模板子目录。"""
+    import json
+    try:
+        with open(CONFIG_FILE) as f:
+            config = json.load(f)
+    except Exception:
+        config = {}
+    base = Path(config.get('output_dir', DEFAULT_OUTPUT_DIR)).expanduser()
+    return base / "video-pitch"
 
 # 拼接配置
 BACKGROUND_COLOR = (20, 20, 30)  # 深色背景
@@ -32,7 +45,7 @@ def load_images(image_paths):
     """加载图片列表"""
     images = []
     for path in image_paths:
-        full_path = OUTPUT_DIR / path if not Path(path).exists() else Path(path)
+        full_path = resolve_output_dir() / path if not Path(path).exists() else Path(path)
         if full_path.exists():
             img = Image.open(full_path)
             images.append(img)
@@ -168,7 +181,7 @@ def combine_grid(images, cols=2, labels=None):
 
 def auto_combine(prefix, max_count=5):
     """自动查找并拼接前缀匹配的图片"""
-    matching_files = sorted(OUTPUT_DIR.glob(f"{prefix}*.png"))
+    matching_files = sorted(resolve_output_dir().glob(f"{prefix}*.png"))
     
     if not matching_files:
         print(f"No images found with prefix: {prefix}")
@@ -196,7 +209,7 @@ def auto_combine(prefix, max_count=5):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="video-pitch / combine_panels：拼接多张 panel 图片（图片读取/输出都基于 skill 根目录 output）"
+        description="video-pitch / combine_panels：拼接多张 panel 图片（图片读取/输出都基于 ~/.hermes/output/gpt-image-2/video-pitch/）"
     )
     parser.add_argument("--images", type=str, help="图片路径列表（逗号分隔）")
     parser.add_argument("--layout", type=str, default="vertical", 
@@ -237,7 +250,7 @@ def main():
         sys.exit(1)
     
     if result:
-        output_path = OUTPUT_DIR / args.output
+        output_path = resolve_output_dir() / args.output
         result.save(output_path, "PNG")
         print(f"Combined image saved: {output_path}")
         print(f"Size: {result.width}x{result.height}")

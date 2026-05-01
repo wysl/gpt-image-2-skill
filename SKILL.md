@@ -20,20 +20,20 @@ tags:
 ## 主要入口
 
 ```text
-/root/.openclaw/skills/gpt-image-2/generate.py                     # 通用入口（底层 API / 非模板）
+~/.hermes/skills/gpt-image-2/generate.py                     # 通用入口（底层 API / 非模板）
 
 # 模板目录化入口（推荐且唯一保留）
-/root/.openclaw/skills/gpt-image-2/template/poster-cosplay/run.py
-/root/.openclaw/skills/gpt-image-2/template/video-pitch/run.py
-/root/.openclaw/skills/gpt-image-2/template/video-pitch/generate_pitchdeck.py
-/root/.openclaw/skills/gpt-image-2/template/video-pitch/combine_panels.py
-/root/.openclaw/skills/gpt-image-2/template/portrait-photography/run.py
-/root/.openclaw/skills/gpt-image-2/template/couple-portrait/run.py
-/root/.openclaw/skills/gpt-image-2/template/kpop-idol/run.py
-/root/.openclaw/skills/gpt-image-2/template/street-photography/run.py
-/root/.openclaw/skills/gpt-image-2/template/bedroom-mirror-selfie/run.py
-/root/.openclaw/skills/gpt-image-2/template/person-photoshoot-3x3/run.py
-/root/.openclaw/skills/gpt-image-2/template/anime-girl-and-man-date-photo-collage-3x3/run.py
+~/.hermes/skills/gpt-image-2/template/poster-cosplay/run.py
+~/.hermes/skills/gpt-image-2/template/video-pitch/run.py
+~/.hermes/skills/gpt-image-2/template/video-pitch/generate_pitchdeck.py
+~/.hermes/skills/gpt-image-2/template/video-pitch/combine_panels.py
+~/.hermes/skills/gpt-image-2/template/portrait-photography/run.py
+~/.hermes/skills/gpt-image-2/template/couple-portrait/run.py
+~/.hermes/skills/gpt-image-2/template/kpop-idol/run.py
+~/.hermes/skills/gpt-image-2/template/street-photography/run.py
+~/.hermes/skills/gpt-image-2/template/bedroom-mirror-selfie/run.py
+~/.hermes/skills/gpt-image-2/template/person-photoshoot-3x3/run.py
+~/.hermes/skills/gpt-image-2/template/anime-girl-and-man-date-photo-collage-3x3/run.py
 ```
 
 ## 模板与脚本的关系
@@ -75,17 +75,26 @@ template/video-pitch/
 
 ## History / Output 规则
 
-- **通用 prompt** 生成的 history：`/root/.openclaw/skills/gpt-image-2/history/`
-- **模板生成** 的 history：`/root/.openclaw/skills/gpt-image-2/template/<template-name>/history/`
-- **所有图片 output**（无论模板还是通用 prompt）：统一落在 ` /root/.openclaw/skills/gpt-image-2/output/ `
+- **通用 prompt** 生成的 history：`history/`（skill 目录内）
+- **模板生成** 的 history：`template/<template-name>/history/`
+- **通用 prompt 生成的图片 output**：`~/.hermes/output/gpt-image-2/normal/`
+- **模板生成的图片 output**：`~/.hermes/output/gpt-image-2/<template-name>/`
+- output 目录可在 `config.json` 的 `output_dir` 字段中自定义，也支持 `~` 开头的路径或相对路径
+
+**配置示例（config.json）：**
+```json
+{
+  "output_dir": "/your/custom/output/path"
+}
+```
 
 也就是：
-- **history 按模板分流**
-- **output 保持在 skill 根目录统一管理**
+- **history 按模板分流**（在 skill 目录内）
+- **output 也按模板分流**（在统一的 output 目录下，可通过 `output_dir` 迁移到任意位置）
 
 ## 配置
 
-配置文件：`/root/.openclaw/skills/gpt-image-2/config.json`
+配置文件：`~/.hermes/skills/gpt-image-2/config.json`
 
 - 支持多 endpoint fallback
 - 按 `priority` 顺序重试
@@ -123,6 +132,183 @@ template/video-pitch/
 - `person-photoshoot-3x3`（中文名：人物写真3x3）
 - `anime-girl-and-man-date-photo-collage-3x3`（中文名：二次元少女与男生约会拼贴3x3）
   - 约束：男角色强制真人化（live-action），女角色强制二次元/动漫化（anime / 2D illustrated）
+
+## 模板兼容策略（重要）
+
+当上游任务（如 Feishu / 其他 agent / 外部工作流）提供的角色、服装、场景细节 **多于模板原生占位符数量** 时：
+
+**不要直接丢信息，也不要优先修改模板文件。**
+优先采用 **调用层兼容**：
+- 保持模板目录下 `template.json` / `builder.py` / `run.py` 不变
+- 分析模板现有占位符与默认结构
+- 将上游细节 **压缩、映射、折叠** 到模板可承载的字段中
+- 仍然通过模板入口执行，而不是绕开模板直接改成通用 prompt（除非任务明确不要求模板）
+
+核心原则：
+1. **模板不动，调用兼容**
+2. **细节不够放时，压缩后塞入最相关字段，不要舍弃核心视觉元素**
+3. **优先保留“看得见”的信息**：角色身份、核心服装、材质/剪裁、发型、配饰、手持物、场景锚点、风格词
+4. **弱化抽象说明词**：人设解释、背景故事、情绪推导等，在字段容量不足时优先让位给视觉信息
+5. **避免把一个模板的调用习惯误套到另一个模板**；先看 `template.json` 中真实存在的占位符再组织 vars
+
+### 通用兼容工作流
+
+1. 读取目标模板的 `template.json`
+2. 找出真实占位符（如 `[xxx]`、`[model_clothing]`、`[background_type]`）
+3. 判断上游信息是否“字段过载”
+4. 采用以下之一：
+   - **直接映射**：上游字段可以一一填进模板 vars
+   - **单字段压缩**：多个细节压成一个高信息密度字符串，塞进单一入口
+   - **相关字段拆分**：把服装、发型、场景分别压进最接近的几个字段
+5. 生成前自查：是否丢了核心视觉元素
+
+---
+
+## 各模板兼容建议
+
+### 1) `poster-cosplay`
+
+**特征：** 单入口模板，核心占位符基本只有 `[xxx]`
+
+**风险：** 上游细节一多，最容易被错误简化成泛化 prompt
+
+**注意：** 此模板默认生成杂志封面风格，会自动添加标题、副标题、条形码、定价等文字元素。如果需要纯净无文字图片， workflow 为：
+```bash
+# Step 1: 用模板生成
+python3 template/poster-cosplay/run.py --vars '{"xxx":"..."}' --output img.png --timeout 500
+
+# Step 2: 用 edit 模式去除文字
+python3 generate.py --mode edit --image img.png \
+  --prompt "Remove all text overlays, magazine titles, subtitles, barcodes, price, and any text from this image. Keep the main character and background exactly the same." \
+  --output img_no_text.png --timeout 500
+```
+
+**兼容策略：**
+- 不改模板文件
+- 将上游关键信息压缩为一个 `xxx` 字符串
+- `xxx` 推荐优先级：
+  1. 角色 / IP
+  2. 核心服装（颜色、材质、关键剪裁）
+  3. 发型
+  4. 头饰 / 耳环 / 手持物
+  5. 场景锚点
+  6. 风格词（cosplay / 真实感 / 高还原度）
+
+**推荐格式：**
+```text
+<角色/IP>，<核心服装>，<关键材质/剪裁>，<发型>，<配饰>，<手持物>，<场景锚点>，<风格>
+```
+
+**示例：**
+```bash
+python3 template/poster-cosplay/run.py \
+  --vars '{"xxx":"碧蓝航线大凤，红色修身晚礼服配黑丝，蓬松裙摆，蕾丝花边与珠片刺绣，优雅盘发，钻石发饰，珍珠耳环，手持红玫瑰，留声机氛围，真实感高还原度 cosplay"}' \
+  --output taihou_cosplay.png \
+  --timeout 500
+```
+
+### 2) `portrait-photography`
+
+**特征：** 占位符较细，适合真人摄影类定向描述
+
+**可映射字段：**
+- `model_name`：角色/主体名
+- `model_appearance`：脸、体态、年龄感、种族风格等
+- `model_clothing`：服装主体 + 材质 + 剪裁 + 配件主信息
+- `model_makeup`：妆容 + 耳饰/面部配件
+- `model_hair`：发型 + 发色 + 发饰
+- `background_type`：场景与布景锚点
+- `lighting_type` / `mood_type` / `pose_angle`：补充摄影表达
+
+**兼容策略：**
+- 优先走多字段直接映射
+- 若上游服装信息过长，把“服装本体 + 最重要配件”留在 `model_clothing`
+- 将“发饰”优先放 `model_hair`，将“耳环/面部饰品”优先放 `model_makeup`
+
+### 3) `person-photoshoot-3x3`
+
+**特征：** 多字段 + 九宫格动作位；适合同一人物一致性表达
+
+**兼容策略：**
+- `subject_name` / `subject_type`：角色身份
+- `hair_style` / `outfit_style` / `makeup_style`：承接主体视觉信息
+- `background_scene` / `lighting_style` / `mood_style`：承接场景与氛围
+- 若上游只有“角色设定”没有 9 个动作：
+  - 先保住一致性相关字段
+  - 再补 9 个动作位，动作可由主题自然展开，但不能改掉主体服装与发型
+- 当字段过载时，**优先保证人物一致性 > 服装一致性 > 动作丰富度**
+
+### 4) `couple-portrait`
+
+**特征：** 双人模板，字段分 person A / person B
+
+**兼容策略：**
+- 先拆角色信息，不要把两个人的信息混成一个长串
+- `person_a_*` / `person_b_*` 分别承接外观与服装
+- `interaction_type` 承接互动关系
+- `background_scene` 承接共同场景
+- 若上游一方信息明显更少，不要硬编太多细节；优先保主体方
+
+### 5) `kpop-idol`
+
+**特征：** 偶像概念照模板，强调概念、造型、色系
+
+**兼容策略：**
+- `idol_concept`：主题概念
+- `idol_costume`：服装主体
+- `idol_makeup_hair`：妆发 + 饰品压缩写入
+- `color_theme` / `background_type`：颜色与舞台/概念布景
+- 若上游提供很多服装细节，优先保留可见度最高的 3~5 个点
+
+### 6) `street-photography`
+
+**特征：** 字段非常多，偏摄影纪实表达
+
+**兼容策略：**
+- 先抽“主体 / 地点 / 时段 / 天气 / 光线 / 情绪 / 瞬间动作”
+- 不要把角色设定长段直接硬塞全部字段
+- 优先填：`main_subject`、`subject_type`、`subject_pose`、`street_location`、`city_name`、`time_of_day`、`weather`、`lighting_condition`、`mood`
+- 其余镜头参数不足时可用模板默认值，不必强造
+
+### 7) `bedroom-mirror-selfie`
+
+**特征：** 生活化单人模板，强调镜前自拍与卧室场景
+
+**兼容策略：**
+- `clothing_description`：服装主体
+- `hair_description` / `face_features` / `expression`：人物视觉焦点
+- `bedroom_description`：卧室锚点
+- `pose_description`：自拍动作
+- 若上游含大量场景杂项，只保留与镜前自拍相关的可见信息
+
+### 8) `anime-girl-and-man-date-photo-collage-3x3`
+
+**特征：** 双主体 + 九宫格剧情
+
+**兼容策略：**
+- `anime_girl_subject` 和 `man_subject` 分开压缩
+- `background_scene` / `lighting_style` / `mood_style` 控整体调性
+- 如上游剧情不足：优先保角色外观一致性，再让 panel 自动展开
+- 如上游已给定关键互动桥段，应优先手填 `panel_1` ~ `panel_9`
+
+### 9) `video-pitch`
+
+**特征：** 信息密度很高，偏提案板 / 影视策划
+
+**兼容策略：**
+- 先按“人物 / 场景 / 色彩 / 运镜 / 情绪 / 音效”分类
+- 避免把全部信息堆进 `one_line_synopsis`
+- 上游信息不足时，优先保证：`title`、`one_line_synopsis`、`core_scene`、`story_flow`、`visual_style`、`lighting_style`、`color_mood`
+
+---
+
+## 执行提醒
+
+- **先分析模板真实占位符，再决定兼容方式**
+- **不要因为模板字段少就擅自改成另一个模板**；除非用户明确同意
+- **不要因为模板字段少就舍弃细节**；应压缩后映射
+- **优先模板兼容，次选通用 prompt**；只有任务明确不要求模板时，才绕开模板
+- 若同类兼容需求持续出现，再考虑新增“调用层映射脚本”，但默认先人工兼容
 
 ## 分辨率约束
 
@@ -289,6 +475,17 @@ python3 template/video-pitch/combine_panels.py --images img1.png,img2.png,img3.p
 5. 图片生成可能较慢，可直接运行脚本并给予足够外层执行时间
 6. **输出流程：先展示 prompt，再执行生成，再发送图片结果**
 7. **统一建议**：skill 内所有生成相关调用默认显式传 `--timeout 500`
+
+## 平台兼容性
+
+**MEDIA: 发送支持情况：**
+- ✅ 支持：telegram, discord, matrix, weixin, signal, yuanbao
+- ❌ 不支持：feishu（飞书）
+
+**飞书平台限制：**
+- 无法通过 MEDIA: 发送文件
+- 大图片（10MB+）可能显示异常
+- 替代方案：用 markdown 路径展示、压缩图片、或提供文件路径让用户自行获取
 
 推荐调用方式：
 

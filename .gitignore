@@ -1,27 +1,18 @@
-# 生成结果（保留示例图片）
-# history/
-# output/
+# API 配置（含敏感信息，请勿提交）
+config.json
+
+# 发布用示例配置
+config.json.example
+
+# History 记录
+history/
 template/*/history/
 
-# 但排除临时生成的文件
-output/*.tmp
-output/*.log
+# Output 文件（由脚本生成）
+*.png
+*.jpg
+*.webp
 
 # Python
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
-.Python
-
-# IDE
-.vscode/
-.idea/
-
-# 临时文件
-*.tmp
-*.log
-*.bak
-
-# 配置（包含敏感信息）
-# config.json 需要用户自行配置

@@ -7,9 +7,9 @@
 - 动态场景生成：`scene_generator.py`
 
 ## 目录规则
-- 模板 history 存放位置：`/root/.openclaw/skills/gpt-image-2/template/anime-girl-and-man-date-photo-collage-3x3/history/`
-- 图片 output 存放位置：`/root/.openclaw/skills/gpt-image-2/output/`
-- 也就是说：**history 按模板分流，output 仍然统一落在 skill 根目录**
+- 模板 history 存放位置：`template/anime-girl-and-man-date-photo-collage-3x3/history/`
+- 图片 output 存放位置：`~/.hermes/output/gpt-image-2/anime-girl-and-man-date-photo-collage-3x3/`
+- output 目录可在 `config.json` 的 `output_dir` 字段中自定义
 
 ## 默认信息
 - 模板显示名：二次元少女与男生约会拼贴3x3
@@ -41,7 +41,7 @@
 
 ## 推荐调用
 ```bash
-cd /root/.openclaw/skills/gpt-image-2/template/anime-girl-and-man-date-photo-collage-3x3
+cd template/anime-girl-and-man-date-photo-collage-3x3
 python3 run.py --vars '{"title_text":"Date Collage","required_keyword":"100% 一致性"}' --output anime-date-3x3.png --timeout 500
 ```
 

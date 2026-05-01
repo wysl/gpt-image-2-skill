@@ -16,11 +16,11 @@ Usage:
 Routing:
   - template: {FIXED_TEMPLATE}
   - history: {TEMPLATE_DIR / 'history'}
-  - output:  {ROOT / 'output'}
+  - output:  ~/.hermes/output/gpt-image-2/anime-girl-and-man-date-photo-collage-3x3/
 
 Notes:
   - do not pass --template here; this runner fixes it automatically
-  - any generated image still lands in the skill-root output directory
+  - any generated image lands in ~/.hermes/output/gpt-image-2/anime-girl-and-man-date-photo-collage-3x3/
 """
 
 args = sys.argv[1:]

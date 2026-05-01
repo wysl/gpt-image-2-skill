@@ -2,7 +2,7 @@
 import json, requests, time, sys
 from pathlib import Path
 
-cfg = json.loads(Path('/root/.openclaw/skills/gpt-image-2/config.json').read_text())
+cfg = json.loads(Path(__file__).parent / 'config.json').read_text())
 endpoint = sorted([e for e in cfg['endpoints'] if e.get('enabled', True)], key=lambda x: x.get('priority', 999))[0]
 url = endpoint['url'].rstrip('/') + '/images/generations'
 headers = {
