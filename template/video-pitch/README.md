@@ -102,3 +102,11 @@ python3 combine_panels.py --images img1.png,img2.png,img3.png --layout vertical
 ## 注意事项
 - 此模板没有单独的动态场景生成逻辑
 - 模板行为主要由 `template.json` + `builder.py` 决定
+
+
+
+## 默认尺寸规则
+
+本模板在未显式传 `--size` 时，读取 `config.json` 中当前优先级最高 endpoint 的 `design_max_size`。
+
+如果显式传了 `--size`，则始终以用户传入尺寸为准。

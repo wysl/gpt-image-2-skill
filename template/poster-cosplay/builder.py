@@ -78,5 +78,5 @@ def build_prompt(template, variables, endpoint_provider=None):
         f"masterpiece, best quality"
 
     quality = template.get("quality", "high")
-    size = template.get("default_size", "2160x3840")
+    size = template.get("default_size")
     return prompt, size, quality

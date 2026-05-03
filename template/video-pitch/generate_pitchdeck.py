@@ -25,10 +25,26 @@ import subprocess
 import sys
 from pathlib import Path
 
-TEMPLATE_DIR = Path(__file__).parent.resolve()
+TEMPLATE_DIR = Path(__file__).resolve().parent
 SKILL_DIR = TEMPLATE_DIR.parent.parent
 CONFIG_FILE = SKILL_DIR / "config.json"
 DEFAULT_OUTPUT_DIR = "~/.hermes/output/gpt-image-2"
+
+
+def load_config():
+    with open(CONFIG_FILE) as f:
+        return json.load(f)
+
+
+def get_design_default_size():
+    endpoints = sorted(
+        [ep for ep in load_config().get("endpoints", []) if ep.get("enabled", True)],
+        key=lambda x: x.get("priority", 999)
+    )
+    if not endpoints:
+        return "1440x2560"
+    ep = endpoints[0]
+    return ep.get("design_max_size", ep.get("post_max_size", "1440x2560"))
 
 
 def resolve_output_dir():
@@ -348,8 +364,10 @@ Style: Professional pitch deck, color swatches layout, lighting mood board, audi
     return prompt
 
 
-def generate_panel(prompt, output_name, size="1440x2560", timeout=500):
+def generate_panel(prompt, output_name, size=None, timeout=500):
     """调用 generate.py 生成单张图片"""
+    if not size:
+        size = get_design_default_size()
     
     cmd = [
         "python3",
@@ -402,7 +420,7 @@ def main():
     )
     parser.add_argument("--vars", type=str, required=True, help="变量JSON字符串")
     parser.add_argument("--prefix", type=str, default="pitch", help="输出文件前缀")
-    parser.add_argument("--size", type=str, default="1440x2560", help="单张图片尺寸")
+    parser.add_argument("--size", type=str, default=None, help="单张图片尺寸；默认读取当前优先级最高 endpoint 的 design_max_size")
     parser.add_argument("--timeout", type=int, default=500, help="传递给 generate.py 的超时秒数")
     parser.add_argument("--no-combine", action="store_true", help="不拼接图片")
     

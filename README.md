@@ -36,6 +36,10 @@ gpt-image-2-skill/
 ├── docs/                 # 详细文档
 │   ├── basic.md          # 基础用法
 │   └── advanced.md       # 高级用法
+├── prompts/              # 风格化提示词素材库（生成人物写真时必读）
+│   ├── README.md         # 索引与使用流程
+│   ├── 学院纯欲风.md     # 学院纯欲/清纯/古风/居家 风格元素 + 15个英文生图模板
+│   └── 福利姬-中文模板.md # 福利姬/性感诱惑 风格元素 + 6个中文模板
 └── template/             # 模板目录
     ├── poster-cosplay/
     │   ├── template.json
@@ -112,6 +116,64 @@ python3 template/portrait-photography/run.py --vars '{"model_name":"美少女"}'
 # video-pitch 模板（生成3张pitch deck）
 python3 template/video-pitch/generate_pitchdeck.py --vars '{"title":"项目名称","subtitle":"副标题"}'
 ```
+
+## 风格化提示词库
+
+`prompts/` 目录存放按风格分类的**可直接用于生图的提示词素材库**，涵盖服装、姿势、配饰、光线、场景、妆容、后期调色等完整元素。
+
+| 文件 | 风格 | 适用场景 | 大小 |
+|------|------|----------|------|
+| `prompts/学院纯欲风.md` | 学院纯欲/清纯/古风/居家 | 校园清新、软萌甜美、汉服古风、慵懒居家 | ~27KB |
+| `prompts/福利姬-中文模板.md` | 福利姬/性感诱惑 | 制服诱惑、清纯无辜、大胆写真、慵懒居家 | ~22KB |
+
+**使用流程：**
+1. 确定风格 → 读取对应 `prompts/xxx.md`
+2. 从服装+姿势+配饰+场景+光线中各选一项组合
+3. 使用文件中的英文模板直接作为 `--prompt`，或映射到 `portrait-photography` 模板 vars
+4. 按安全规则降敏后生成
+
+详见 `prompts/README.md`。
+
+**快速示例：**
+
+```bash
+# 从学院纯欲风模板12（JK制服+教室）直接生图
+cd ~/.hermes/skills/gpt-image-2
+python3 generate.py --prompt "portrait photography, natural window light streaming through classroom windows, warm afternoon golden hour tones, young woman wearing white shirt with plaid skirt, hair in low ponytail with ribbon, sitting on desk edge, legs dangling, holding book close to chest, shy smile, nostalgic school atmosphere, film grain" --size 1024x1536 --output jk-classroom.png --timeout 500
+
+# 从元素库混搭，映射到 portrait-photography 模板
+cd template/portrait-photography
+python3 run.py --vars '{
+  "model_appearance":"成年东亚女性，白皙肌肤，精致五官，神情温柔",
+  "model_clothing":"白色蕾丝连衣裙，缎面质感，珍珠纽扣装饰",
+  "model_hair":"黑色微卷长发，空气刘海，珍珠发夹",
+  "model_makeup":"水光唇釉，大地色眼影，腮红晕染",
+  "background_type":"卧室白色床铺，自然窗光",
+  "lighting_type":"窗边侧光，柔和暖色调",
+  "pose_angle":"侧躺单手撑头，双腿微曲，慵懒自然",
+  "mood_type":"温柔纯欲，清新自然，高级人像摄影感"
+}' --output pure-desire-bedroom.png --timeout 500
+```
+
+
+## 端点尺寸配置
+
+`config.json` 中每个 endpoint 支持两个尺寸字段：
+
+- `post_max_size`：模板生成默认尺寸（除 `video-pitch` 外的所有模板）
+- `design_max_size`：通用生成与 `video-pitch` 默认尺寸
+
+当前约定：
+- `88996.cloud`：`post_max_size=2160x3840`，`design_max_size=1440x2560`
+- `bltcy.ai`：`post_max_size=1440x2560`，`design_max_size=1440x2560`
+- `xflow`：`post_max_size=1440x2560`，`design_max_size=1440x2560`
+
+脚本规则：
+- 显式传 `--size` 时，以用户参数为准
+- 未传 `--size` 时：
+  - `video-pitch` 用当前优先级最高 endpoint 的 `design_max_size`
+  - 其他所有模板用当前优先级最高 endpoint 的 `post_max_size`
+  - 通用 `generate.py` 用当前优先级最高 endpoint 的 `design_max_size`
 
 ## 模板列表
 

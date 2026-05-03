@@ -49,3 +49,11 @@ python3 run.py --vars '{"title_text":"Date Collage","required_keyword":"100% 一
 - 该模板包含 `scene_generator.py`
 - 若未显式传入 `panel_1 ~ panel_9`，会自动调用 LLM 生成动态场景
 - 若你传入了 `panel_1 ~ panel_9`，则优先使用你提供的场景
+
+
+
+## 默认尺寸规则
+
+本模板在未显式传 `--size` 时，读取 `config.json` 中当前优先级最高 endpoint 的 `post_max_size`。
+
+如果显式传了 `--size`，则始终以用户传入尺寸为准。

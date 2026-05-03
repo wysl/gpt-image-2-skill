@@ -82,6 +82,29 @@ def get_endpoints():
     )
     return endpoints
 
+
+def get_default_size_for_context(template_name=None, mode="generate"):
+    """根据当前优先级最高的端点和上下文返回默认尺寸。
+
+    - video-pitch 默认走 design_max_size
+    - 其他所有模板默认走 post_max_size
+    - 无模板的通用生成默认走 design_max_size
+    - edit/composite/inpaint 不改尺寸逻辑
+    """
+    if mode != "generate":
+        return "1024x1536"
+
+    endpoints = get_endpoints()
+    if not endpoints:
+        return "1024x1536"
+
+    ep = endpoints[0]
+    if template_name == "video-pitch":
+        return ep.get("design_max_size", ep.get("post_max_size", "1024x1536"))
+    if template_name:
+        return ep.get("post_max_size", ep.get("design_max_size", "1024x1536"))
+    return ep.get("design_max_size", ep.get("post_max_size", "1024x1536"))
+
 def list_templates():
     """列出所有可用模板目录。"""
     if not TEMPLATE_DIR.exists():
@@ -538,11 +561,12 @@ def main():
         print("Error: --prompt required (or use --template)")
         sys.exit(1)
     
-    # 确定参数（仅在用户显式传参时覆盖模板；否则使用模板值）
+    # 确定参数（仅在用户显式传参时覆盖模板；否则优先使用模板值，再回退到端点尺寸配置）
     user_provided_size = any(arg in sys.argv for arg in ['--size', '--size=', '-s'])
     user_provided_quality = any(arg in sys.argv for arg in ['--quality'])
 
-    size = args.size if user_provided_size else (template_size or '1024x1536')
+    endpoint_default_size = get_default_size_for_context(args.template, args.mode)
+    size = args.size if user_provided_size else (template_size or endpoint_default_size)
     quality = args.quality if user_provided_quality else (template_quality or 'high')
     
     # 根据模式执行

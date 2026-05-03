@@ -40,3 +40,10 @@ python3 run.py --vars '{"xxx":"莎赫拉查德 Code S from Brown Dust 2"}' --out
 - 模板行为主要由 `template.json` + `builder.py` 决定
 - 排版层级已整理为清晰的5级结构
 - 非主题文字统一使用中文
+
+
+## 默认尺寸规则
+
+本模板在未显式传 `--size` 时，读取 `config.json` 中当前优先级最高 endpoint 的 `post_max_size`。
+
+如果显式传了 `--size`，则始终以用户传入尺寸为准。
