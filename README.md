@@ -1,485 +1,301 @@
 # GPT-Image-2 Skill
 
-使用 GPT-Image-2 API 生成高质量图片，支持文生图、图生图、局部编辑、多图合成、模板生成等能力。
+使用 GPT-Image-2 API 生成图片，支持通用 prompt、模板生成、编辑、局部重绘和多图合成。
 
-## 模板生成效果展示
+## 模板预览
 
 <table>
 <tr>
-<td align="center"><img src="example/poster-cosplay-example.png" width="300" height="400"><br><b>Cosplay角色海报</b></td>
-<td align="center"><img src="example/video-pitch-example.png" width="300" height="400"><br><b>Pitch Deck 3联拼贴</b></td>
+<td align="center"><img src="example/poster-cosplay-example.png" width="300" height="400"><br><b>Cosplay 角色海报</b></td>
+<td align="center"><img src="example/video-pitch-example.png" width="300" height="400"><br><b>Video Pitch Deck</b></td>
 <td align="center"><img src="example/portrait-photography-example.png" width="300" height="400"><br><b>人像摄影</b></td>
 </tr>
 <tr>
 <td align="center"><img src="example/couple-portrait-example.png" width="300" height="400"><br><b>情侣双人写真</b></td>
-<td align="center"><img src="example/kpop-idol-example.png" width="300" height="400"><br><b>K-pop偶像写真</b></td>
+<td align="center"><img src="example/kpop-idol-example.png" width="300" height="400"><br><b>K-pop 偶像写真</b></td>
 <td align="center"><img src="example/street-photography-example.png" width="300" height="400"><br><b>街头摄影</b></td>
 </tr>
 <tr>
 <td align="center"><img src="example/bedroom-mirror-selfie-example.png" width="300" height="400"><br><b>卧室镜自拍</b></td>
-<td align="center"><img src="example/person-photoshoot-3x3-example.png" width="300" height="400"><br><b>人物写真九宫格</b></td>
-<td align="center"><img src="example/anime-date-collage-3x3-example.png" width="300" height="400"><br><b>动漫少女与真人约会拼贴</b></td>
+<td align="center"><img src="example/person-photoshoot-3x3-example.png" width="300" height="400"><br><b>人物写真 3x3</b></td>
+<td align="center"><img src="example/anime-date-collage-3x3-example.png" width="300" height="400"><br><b>动漫少女与真人约会拼贴 3x3</b></td>
 </tr>
 </table>
 
----
+## 项目结构
 
-## 目录结构
-
-```
+```text
 gpt-image-2-skill/
-├── config.json           # API 配置（需要填写您的 url 和 key）
-├── generate.py           # 通用入口脚本
-├── README.md             # 本文档
-├── SKILL.md              # Skill 说明文档
-├── example/              # 示例图片
-├── docs/                 # 详细文档
-│   ├── basic.md          # 基础用法
-│   └── advanced.md       # 高级用法
-├── prompts/              # 风格化提示词素材库（生成人物写真时必读）
-│   ├── README.md         # 索引与使用流程
-│   ├── 学院纯欲风.md     # 学院纯欲/清纯/古风/居家 风格元素 + 15个英文生图模板
-│   └── 福利姬-中文模板.md # 福利姬/性感诱惑 风格元素 + 6个中文模板
-└── template/             # 模板目录
-    ├── poster-cosplay/
-    │   ├── template.json
-    │   ├── builder.py
-    │   ├── run.py
-    │   └── README.md
-    ├── video-pitch/
-    │   ├── template.json
-    │   ├── builder.py
-    │   ├── run.py
-    │   ├── generate_pitchdeck.py
-    │   ├── combine_panels.py
-    │   └ README.md
-    ├── portrait-photography/
-    ├── couple-portrait/
-    ├── kpop-idol/
-    ├── street-photography/
-    ├── bedroom-mirror-selfie/
-    ├── person-photoshoot-3x3/
-    │   ├── template.json
-    │   ├── builder.py
-    │   ├── run.py
-    │   ├── scene_generator.py
-    │   └ README.md
-    └── anime-girl-and-man-date-photo-collage-3x3/
-        ├── template.json
-        ├── builder.py
-        ├── run.py
-        ├── scene_generator.py
-        └ README.md
+├── README.md
+├── SKILL.md
+├── generate.py
+├── config.json.example
+├── docs/
+│   ├── README.md
+│   ├── basic.md
+│   └── advanced.md
+├── prompts/
+│   ├── README.md
+│   ├── 学院纯欲风.md
+│   └── 福利姬-中文模板.md
+├── template/
+│   ├── poster-cosplay/
+│   ├── video-pitch/
+│   ├── portrait-photography/
+│   ├── couple-portrait/
+│   ├── kpop-idol/
+│   ├── street-photography/
+│   ├── bedroom-mirror-selfie/
+│   ├── person-photoshoot-3x3/
+│   └── anime-girl-and-man-date-photo-collage-3x3/
+└── example/
 ```
+
+### 目录说明
+
+- `generate.py`：通用 CLI 入口，负责 API 调用、模板加载、history 保存和输出分流。
+- `config.json.example`：公开示例配置；复制为 `config.json` 后填写自己的 endpoint 和 key。
+- `docs/`：基础与进阶用法说明。
+- `prompts/`：风格化 prompt 素材库与使用说明。
+- `template/<name>/`：每个模板的独立目录，包含 `template.json`、`builder.py`、`run.py` 和对应 README。
 
 ## 快速开始
 
-### 1. 配置 API
+### 1. 准备配置
 
-编辑 `config.json`，填写您的 API url 和 key：
+复制示例配置并填写自己的 endpoint：
+
+```bash
+cp config.json.example config.json
+```
+
+最小示例：
 
 ```json
 {
   "endpoints": [
     {
       "name": "your-provider",
-      "url": "xxxxx",
+      "url": "https://your-api.example/v1",
       "model": "gpt-image-2",
-      "key": "xxxxx",
+      "key": "sk-your-key",
       "priority": 1,
       "timeout": 500,
-      "enabled": true
+      "enabled": true,
+      "post_max_size": "1440x2560",
+      "design_max_size": "1440x2560"
     }
   ],
   "default_model": "gpt-image-2",
-  "retry_count": 1
+  "retry_count": 1,
+  "output_dir": "~/.hermes/output/gpt-image-2"
 }
 ```
 
-### 2. 基础用法
-
-#### 文生图（通用 prompt）
+### 2. 通用生成
 
 ```bash
-python3 generate.py --prompt "一位优雅的少女站在樱花树下，日系风格" --size 1024x1536 --quality high
+python3 generate.py \
+  --prompt "一位优雅的少女站在樱花树下，日系风格" \
+  --size 1024x1536 \
+  --quality high
 ```
 
-#### 使用模板
-
-```bash
-# poster-cosplay 模板
-python3 template/poster-cosplay/run.py --vars '{"xxx":"狐女"}'
-
-# portrait-photography 模板
-python3 template/portrait-photography/run.py --vars '{"model_name":"美少女"}'
-
-# video-pitch 模板（生成3张pitch deck）
-python3 template/video-pitch/generate_pitchdeck.py --vars '{"title":"项目名称","subtitle":"副标题"}'
-```
-
-## 风格化提示词库
-
-`prompts/` 目录存放按风格分类的**可直接用于生图的提示词素材库**，涵盖服装、姿势、配饰、光线、场景、妆容、后期调色等完整元素。
-
-| 文件 | 风格 | 适用场景 | 大小 |
-|------|------|----------|------|
-| `prompts/学院纯欲风.md` | 学院纯欲/清纯/古风/居家 | 校园清新、软萌甜美、汉服古风、慵懒居家 | ~27KB |
-| `prompts/福利姬-中文模板.md` | 福利姬/性感诱惑 | 制服诱惑、清纯无辜、大胆写真、慵懒居家 | ~22KB |
-
-**使用流程：**
-1. 确定风格 → 读取对应 `prompts/xxx.md`
-2. 从服装+姿势+配饰+场景+光线中各选一项组合
-3. 使用文件中的英文模板直接作为 `--prompt`，或映射到 `portrait-photography` 模板 vars
-4. 按安全规则降敏后生成
-
-详见 `prompts/README.md`。
-
-**快速示例：**
-
-```bash
-# 从学院纯欲风模板12（JK制服+教室）直接生图
-cd ~/.hermes/skills/gpt-image-2
-python3 generate.py --prompt "portrait photography, natural window light streaming through classroom windows, warm afternoon golden hour tones, young woman wearing white shirt with plaid skirt, hair in low ponytail with ribbon, sitting on desk edge, legs dangling, holding book close to chest, shy smile, nostalgic school atmosphere, film grain" --size 1024x1536 --output jk-classroom.png --timeout 500
-
-# 从元素库混搭，映射到 portrait-photography 模板
-cd template/portrait-photography
-python3 run.py --vars '{
-  "model_appearance":"成年东亚女性，白皙肌肤，精致五官，神情温柔",
-  "model_clothing":"白色蕾丝连衣裙，缎面质感，珍珠纽扣装饰",
-  "model_hair":"黑色微卷长发，空气刘海，珍珠发夹",
-  "model_makeup":"水光唇釉，大地色眼影，腮红晕染",
-  "background_type":"卧室白色床铺，自然窗光",
-  "lighting_type":"窗边侧光，柔和暖色调",
-  "pose_angle":"侧躺单手撑头，双腿微曲，慵懒自然",
-  "mood_type":"温柔纯欲，清新自然，高级人像摄影感"
-}' --output pure-desire-bedroom.png --timeout 500
-```
-
-
-## 端点尺寸配置
-
-`config.json` 中每个 endpoint 支持两个尺寸字段：
-
-- `post_max_size`：模板生成默认尺寸（除 `video-pitch` 外的所有模板）
-- `design_max_size`：通用生成与 `video-pitch` 默认尺寸
-
-当前约定：
-- `88996.cloud`：`post_max_size=2160x3840`，`design_max_size=1440x2560`
-- `bltcy.ai`：`post_max_size=1440x2560`，`design_max_size=1440x2560`
-- `xflow`：`post_max_size=1440x2560`，`design_max_size=1440x2560`
-
-脚本规则：
-- 显式传 `--size` 时，以用户参数为准
-- 未传 `--size` 时：
-  - `video-pitch` 用当前优先级最高 endpoint 的 `design_max_size`
-  - 其他所有模板用当前优先级最高 endpoint 的 `post_max_size`
-  - 通用 `generate.py` 用当前优先级最高 endpoint 的 `design_max_size`
-
-## 模板列表
-
-| 模板 | 说明 | 特点 |
-|------|------|------|
-| `poster-cosplay` | Cosplay角色海报 | 电影级海报风格，杂志封面质感 |
-| `video-pitch` | 视频方案Pitch Deck | 3张图拆分：角色设计+色彩方案+声音设计 |
-| `portrait-photography` | 人像摄影 | 高端杂志封面风格 |
-| `couple-portrait` | 情侣双人写真 | 亲密感、甜蜜氛围 |
-| `kpop-idol` | K-pop偶像写真 | 韩流偶像风格，舞台级妆发 |
-| `street-photography` | 街头摄影 | 纪实感，城市氛围 |
-| `bedroom-mirror-selfie` | 卧室镜自拍 | 私密自拍风格，真实肌肤质感 |
-| `person-photoshoot-3x3` | 人物写真3x3 | 九宫格拼贴，100%一致性 |
-| `anime-girl-and-man-date-photo-collage-3x3` | 动漫少女与真人约会拼贴 | 二次元少女+真人男生，3x3拼贴 |
-
-## 模板使用示例
-
-### poster-cosplay
+### 3. 使用模板
 
 ```bash
 python3 template/poster-cosplay/run.py \
   --vars '{"xxx":"莎赫拉查德 Code S from Brown Dust 2"}' \
-  --output poster.png \
-  --timeout 500
-```
+  --output poster.png
 
-**输出**：
-- 图片：`~/.hermes/output/gpt-image-2/poster-cosplay/poster.png`
-- History：`template/poster-cosplay/history/YYYYMMDD-HHMMSS.json`
-
----
-
-### video-pitch
-
-```bash
-python3 template/video-pitch/generate_pitchdeck.py \
-  --vars '{"title":"剑舞乱世","subtitle":"乱世江湖·剑影传奇","genre":"武侠动作"}' \
-  --prefix my_pitch \
-  --timeout 500
-```
-
-**输出**：
-- `~/.hermes/output/gpt-image-2/video-pitch/my_pitch-panel-1.png`（角色设计+故事板）
-- `~/.hermes/output/gpt-image-2/video-pitch/my_pitch-panel-2.png`（项目信息+道具插画）
-- `~/.hermes/output/gpt-image-2/video-pitch/my_pitch-panel-3.png`（色彩+灯光+声音）
-- `~/.hermes/output/gpt-image-2/video-pitch/my_pitch-full-pitchdeck.png`（拼接版）
-
----
-
-### portrait-photography
-
-```bash
 python3 template/portrait-photography/run.py \
-  --vars '{"model_name":"日系少女","model_appearance":"20岁东亚少女"}' \
-  --output portrait.png \
-  --timeout 500
+  --vars '{"model_name":"日系少女"}' \
+  --output portrait.png
+
+python3 template/video-pitch/generate_pitchdeck.py \
+  --vars '{"title":"项目名称","subtitle":"副标题"}' \
+  --prefix my-pitch
 ```
 
----
+## 配置说明
 
-### couple-portrait
+### `config.json`
+
+| 字段 | 说明 |
+| --- | --- |
+| `endpoints` | endpoint 列表，按 `priority` 从小到大选择 |
+| `default_model` | 默认模型名 |
+| `retry_count` | 每个 endpoint 的重试次数 |
+| `output_dir` | 输出根目录；模板和通用生成都会在该目录下分流 |
+
+### 每个 endpoint 的字段
+
+| 字段 | 说明 |
+| --- | --- |
+| `name` | endpoint 名称 |
+| `url` | API 根地址 |
+| `model` | 模型名，当前默认 `gpt-image-2` |
+| `key` | API key |
+| `priority` | 数字越小优先级越高 |
+| `timeout` | 单次请求超时秒数 |
+| `enabled` | 是否启用 |
+| `post_max_size` | 非 `video-pitch` 模板的默认尺寸 |
+| `design_max_size` | 通用生成和 `video-pitch` 的默认尺寸 |
+
+### 多 endpoint 行为
+
+- 只会使用 `enabled: true` 的 endpoint。
+- 请求按 `priority` 顺序尝试。
+- 如果前一个 endpoint 失败，会自动回退到下一个。
+- `--timeout` 只覆盖当前命令，不会修改 `config.json`。
+
+## 尺寸规则
+
+这是当前代码中的实际规则：
+
+- 显式传入 `--size` 时，始终以 `--size` 为准。
+- 未传 `--size` 时：
+  - `generate.py` 默认使用当前最高优先级 endpoint 的 `design_max_size`。
+  - `video-pitch` 默认使用当前最高优先级 endpoint 的 `design_max_size`。
+  - 其他模板默认使用当前最高优先级 endpoint 的 `post_max_size`。
+
+### 尺寸校验
+
+`generate.py` 会校验以下约束：
+
+- 宽高建议为 16 的倍数。
+- 长宽比不得超过 3:1。
+- 总像素需在 `655,360` 到 `8,294,400` 之间。
+- 最大边达到或超过 `3840` 时会给出 warning。
+
+## CLI 概览
+
+### `generate.py`
 
 ```bash
-python3 template/couple-portrait/run.py \
-  --vars '{"person_a_name":"女生","person_b_name":"男生"}' \
-  --output couple.png \
-  --timeout 500
+python3 generate.py [options]
 ```
 
----
+常用参数：
 
-### kpop-idol
+| 参数 | 说明 |
+| --- | --- |
+| `--prompt` | 通用 prompt；使用模板时可省略 |
+| `--template` | 模板名 |
+| `--vars` | 模板变量 JSON |
+| `--list-templates` | 列出所有模板 |
+| `--mode` | `generate` / `edit` / `composite` / `inpaint` |
+| `--size` | 输出尺寸 |
+| `--quality` | 当前仅支持 `high` |
+| `--n` | 生成数量，1 到 4 |
+| `--output` | 输出文件名；相对路径会落到对应 output 子目录 |
+| `--timeout` | 本次请求超时 |
+| `--image` | edit/composite 模式的输入图，多个用逗号分隔 |
+| `--mask` | inpaint 模式的蒙版图 |
 
-```bash
-python3 template/kpop-idol/run.py \
-  --vars '{"idol_name":"Jennie风格","idol_group":"BLACKPINK"}' \
-  --output kpop.png \
-  --timeout 500
-```
-
----
-
-### street-photography
-
-```bash
-python3 template/street-photography/run.py \
-  --vars '{"main_subject":"东亚少女","street_location":"东京涩谷"}' \
-  --output street.png \
-  --timeout 500
-```
-
----
-
-### bedroom-mirror-selfie
-
-```bash
-python3 template/bedroom-mirror-selfie/run.py \
-  --vars '{"name":"甜美少女","clothing_description":"粉色宽松睡裙"}' \
-  --output selfie.png \
-  --timeout 500
-```
-
----
-
-### person-photoshoot-3x3
-
-```bash
-python3 template/person-photoshoot-3x3/run.py \
-  --vars '{"subject_name":"日系少女","subject_type":"young East Asian female idol"}' \
-  --output photoshoot_3x3.png \
-  --timeout 500
-```
-
-**特点**：九宫格拼贴，保持100%人物一致性
-
----
-
-### anime-girl-and-man-date-photo-collage-3x3
-
-```bash
-python3 template/anime-girl-and-man-date-photo-collage-3x3/run.py \
-  --vars '{"anime_girl_subject":"动漫少女","man_subject":"东亚真人男生"}' \
-  --output anime_date.png \
-  --timeout 500
-```
-
-**特点**：二次元动漫少女 + 真人男生约会场景，3x3九宫格拼贴
-
----
-
-## History 与 Output 规则
-
-### History 存储位置
-
-- **模板调用**：`template/<模板名>/history/`
-- **通用 prompt**：`history/`（根目录）
-
-### Output 存储位置
-
-- **通用 prompt 生成的图片**：`~/.hermes/output/gpt-image-2/normal/`
-- **模板生成的图片**：`~/.hermes/output/gpt-image-2/<template-name>/`
-- output 目录可在 `config.json` 的 `output_dir` 字段中自定义
-
-### 示例
-
-```
-# 模板调用
-template/poster-cosplay/history/20260428-123456.json
-~/.hermes/output/gpt-image-2/poster-cosplay/poster.png
-
-# 通用 prompt
-history/20260428-123456.json
-~/.hermes/output/gpt-image-2/normal/20260428-123456.png
-```
-
-## 高级功能
-
-### 图片编辑（edit）
+### 常见模式
 
 ```bash
 python3 generate.py --mode edit \
   --image photo.png \
-  --prompt "改为专业模特拍摄姿势"
-```
+  --prompt "Change only the pose. Keep everything else the same."
 
-### 多图合成（composite）
-
-```bash
 python3 generate.py --mode composite \
-  --image img1.png,img2.png,img3.png \
-  --prompt "将三张图片合成一张杂志封面"
-```
+  --image img1.png,img2.png \
+  --prompt "Put the accessory from Image 1 onto the subject in Image 2."
 
-### 局部重绘（inpaint）
-
-```bash
 python3 generate.py --mode inpaint \
   --image photo.png \
   --mask mask.png \
-  --prompt "将衣服改为红色"
+  --prompt "In the masked area, generate a red dress."
 ```
 
-## API 配置说明
+## 模板入口
 
-### endpoints 字段
+每个模板目录都提供固定入口 `template/<name>/run.py`，不需要再传 `--template`。
 
-| 字段 | 说明 | 示例 |
-|------|------|------|
-| `name` | Endpoint 名称 | `"88996.cloud"` |
-| `url` | API 地址 | `"https://xxxxx"` |
-| `model` | 模型名称 | `"gpt-image-2"` |
-| `key` | API Key | `"xxxxx"` |
-| `priority` | 优先级（数字越小优先级越高） | `1` |
-| `timeout` | 超时时间（秒） | `500` |
-| `enabled` | 是否启用 | `true` |
+| 模板 | 入口 | 说明 |
+| --- | --- | --- |
+| `poster-cosplay` | `template/poster-cosplay/run.py` | Cosplay 海报 |
+| `video-pitch` | `template/video-pitch/run.py` | 单张 pitch 页面 |
+| `portrait-photography` | `template/portrait-photography/run.py` | 单人人像摄影 |
+| `couple-portrait` | `template/couple-portrait/run.py` | 双人写真 |
+| `kpop-idol` | `template/kpop-idol/run.py` | K-pop 偶像概念照 |
+| `street-photography` | `template/street-photography/run.py` | 街头摄影 |
+| `bedroom-mirror-selfie` | `template/bedroom-mirror-selfie/run.py` | 卧室镜自拍 |
+| `person-photoshoot-3x3` | `template/person-photoshoot-3x3/run.py` | 同人物九宫格 |
+| `anime-girl-and-man-date-photo-collage-3x3` | `template/anime-girl-and-man-date-photo-collage-3x3/run.py` | 二次元少女 + 真人男性九宫格 |
 
-### 多 endpoint 配置
+`video-pitch` 额外提供：
 
-支持配置多个 API endpoint，按 priority 顺序尝试：
+- `template/video-pitch/generate_pitchdeck.py`：生成 3 张 panel，并可自动拼接。
+- `template/video-pitch/combine_panels.py`：把已有 panel 图片拼成一张大图。
 
-```json
-{
-  "endpoints": [
-    {
-      "name": "primary",
-      "url": "xxxxx",
-      "key": "xxxxx",
-      "priority": 1,
-      "enabled": true
-    },
-    {
-      "name": "backup",
-      "url": "xxxxx",
-      "key": "xxxxx",
-      "priority": 2,
-      "enabled": true
-    }
-  ]
-}
+## 输出与 history
+
+### 输出目录
+
+默认输出根目录来自 `config.json.output_dir`；如果未配置，默认值为：
+
+```text
+~/.hermes/output/gpt-image-2
 ```
 
-## 参数说明
+在该目录下按用途分流：
 
-### generate.py 参数
+- 通用生成：`normal/`
+- 模板生成：`<template-name>/`
 
-| 参数 | 说明 | 默认值 |
-|------|------|--------|
-| `--prompt` | 图片描述 | 必填 |
-| `--template` | 模板名称 | 无 |
-| `--vars` | 模板变量（JSON） | 无 |
-| `--size` | 图片尺寸 | `1024x1536` |
-| `--quality` | 图片质量 | `high` |
-| `--n` | 生成数量（1-4） | `1` |
-| `--output` | 输出文件名 | 自动生成 |
-| `--timeout` | 超时时间（秒） | `500` |
-| `--mode` | 模式（generate/edit/composite/inpaint） | `generate` |
+示例：
 
-### 模板 run.py 参数
-
-| 参数 | 说明 |
-|------|------|
-| `--vars` | 模板变量（JSON 格式） |
-| `--output` | 输出文件名 |
-| `--timeout` | 超时时间（秒） |
-
-## 常见问题
-
-### 1. 图片尺寸警告
-
-```
-Warning: Max edge >= 3840px, results may be unstable
+```text
+~/.hermes/output/gpt-image-2/normal/20260503-101500.png
+~/.hermes/output/gpt-image-2/poster-cosplay/poster.png
+~/.hermes/output/gpt-image-2/video-pitch/my-pitch-panel-1.png
 ```
 
-**解决**：这是提示性警告，不影响生成。如遇到不稳定问题，可将 `longest side` 调小。
+### history 目录
 
-### 2. 模板变量未扩展
+history 永远保存在仓库内：
 
-```
-⚠️ WARNING: Template has 2 unexpanded placeholders: ['xxx', 'yyy']
-```
+- 通用生成：`history/`
+- 模板生成：`template/<template-name>/history/`
 
-**解决**：使用 `--vars` 提供缺失的变量值：
+示例：
 
-```bash
-python3 template/poster-cosplay/run.py --vars '{"xxx":"角色名","yyy":"其他变量"}'
-```
-
-### 3. endpoint 连接失败
-
-```
-Error: All endpoints failed
+```text
+history/20260503-101500.json
+template/poster-cosplay/history/20260503-101620.json
 ```
 
-**解决**：
-1. 检查 `config.json` 中的 `url` 和 `key` 是否正确
-2. 检查网络连接
-3. 尝试使用其他 endpoint（设置不同的 priority）
+## Prompt 素材库
 
-## 依赖
+`prompts/` 目录提供可复用的风格化 prompt 素材，适合人物写真类任务。
 
-- Python 3.8+
-- requests
-- Pillow（用于 video-pitch 图片拼接）
+| 文件 | 说明 |
+| --- | --- |
+| `prompts/README.md` | 索引、选型方法和安全写法 |
+| `prompts/学院纯欲风.md` | 学院、清纯、古风、居家等风格元素与英文模板 |
+| `prompts/福利姬-中文模板.md` | 更偏性感与情绪化表达的中文模板 |
 
-## 安装依赖
+使用建议：
 
-```bash
-pip install requests Pillow
-```
+1. 先读 `prompts/README.md`。
+2. 选一个风格文件读取元素。
+3. 再决定是直接走 `generate.py --prompt`，还是映射到某个模板的 `--vars`。
 
-## 版本历史
+## 发布前不要提交的文件
 
-### v5.2.0
+以下内容应保持在 `.gitignore` 中，发布时不要提交：
 
-- 模板目录化重构
-- 9个模板独立目录
-- history 按模板分目录存储
-- output 统一放在 ~/.hermes/output/gpt-image-2/ 下，按模板/normal 分目录
-- 修复 combine_panels.py 和 generate_pitchdeck.py 路径问题
-- 添加示例图片预览
+- `config.json`：本地 endpoint、API key 和私有配置。
+- `history/` 与 `template/*/history/`：生成历史记录。
+- Python 缓存文件：`__pycache__/`、`*.pyc`。
 
-## 作者
+如果你要对外发布配置，请只提交 `config.json.example`，不要提交真实 key。
 
-- **Author**: _wysl
-- **Version**: 5.2.0
+## 更多说明
 
-## 许可证
-
-MIT License
+- `docs/basic.md`：通用 prompt 与基础模式建议。
+- `docs/advanced.md`：多图、编辑、局部重绘等进阶用法。
+- `SKILL.md`：面向 Claude Skill/自动化调用的说明。

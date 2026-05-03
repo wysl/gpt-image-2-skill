@@ -1,59 +1,43 @@
 # anime-girl-and-man-date-photo-collage-3x3
 
-## 作用
-- 模板定义：`template.json`
-- Prompt 组装：`builder.py`
-- 固定入口：`run.py`
-- 动态场景生成：`scene_generator.py`
+## 用途
+用于生成 9:16 的 3x3 约会拼贴海报：男主保持真人摄影质感，女主保持二次元 / 2D 动漫质感，并在 9 个分镜中维持一致性。
 
-## 目录规则
-- 模板 history 存放位置：`template/anime-girl-and-man-date-photo-collage-3x3/history/`
-- 图片 output 存放位置：`~/.hermes/output/gpt-image-2/anime-girl-and-man-date-photo-collage-3x3/`
-- output 目录可在 `config.json` 的 `output_dir` 字段中自定义
+## 目录内容
+- `template.json`：模板结构与占位变量
+- `builder.py`：将模板变量组装为最终 prompt
+- `run.py`：固定模板入口
+- `scene_generator.py`：可选的 9 宫格动态场景生成
 
-## 默认信息
-- 模板显示名：二次元少女与男生约会拼贴3x3
-- 默认质量：high
-- 默认比例：9:16
-- 默认最长边：3840
-- 默认尺寸：2160x3840
-
-## 支持的默认变量
-- `anime_girl_subject`
-- `background_scene`
-- `lighting_style`
-- `man_subject`
-- `mood_style`
-- `panel_1`
-- `panel_2`
-- `panel_3`
-- `panel_4`
-- `panel_5`
-- `panel_6`
-- `panel_7`
-- `panel_8`
-- `panel_9`
-- `poster_style`
-- `required_keyword`
-- `subtitle_text`
-- `tagline_text`
-- `title_text`
+## 关键变量
+- 主体：`man_subject`、`anime_girl_subject`、`required_keyword`
+- 风格与文案：`poster_style`、`background_scene`、`lighting_style`、`mood_style`、`title_text`、`subtitle_text`、`tagline_text`
+- 九宫格分镜：`panel_1` 到 `panel_9`
 
 ## 推荐调用
 ```bash
-cd template/anime-girl-and-man-date-photo-collage-3x3
-python3 run.py --vars '{"title_text":"Date Collage","required_keyword":"100% 一致性"}' --output anime-date-3x3.png --timeout 500
+python3 template/anime-girl-and-man-date-photo-collage-3x3/run.py \
+  --vars '{
+    "man_subject": "a real adult man with short dark hair and a plain dark shirt",
+    "anime_girl_subject": "an anime-style young woman with blonde twin ponytails and large blue eyes",
+    "required_keyword": "100% 一致性",
+    "title_text": "Date Collage"
+  }' \
+  --output anime-date-3x3.png
 ```
 
+## 尺寸规则
+- 显式传入 `--size` 时，总是以 `--size` 为准。
+- 未传 `--size` 时，本模板读取 `config.json` 中当前优先级最高 endpoint 的 `post_max_size`。
+- `template.json` 里的 `aspect_ratio` / `longest side` 只表达模板意图，不是运行时硬编码默认尺寸。
+
+## 输出与 history
+- 生成历史保存在 `template/anime-girl-and-man-date-photo-collage-3x3/history/`。
+- 如果传入 `--output`，图片写到指定位置。
+- 如果不传 `--output`，图片输出到 `config.json` 的 `output_dir/anime-girl-and-man-date-photo-collage-3x3/`；未配置时使用项目默认输出目录。
+
 ## 注意事项
-- 该模板包含 `scene_generator.py`
-- 若未显式传入 `panel_1 ~ panel_9`，会自动调用 LLM 生成动态场景
-- 若你传入了 `panel_1 ~ panel_9`，则优先使用你提供的场景
-
-
-
-## 默认尺寸规则
-
-本模板在未显式传 `--size` 时，读取 `config.json` 中当前优先级最高 endpoint 的 `post_max_size`。
-
-如果显式传了 `--size`，则始终以用户传入尺寸为准。
+- `run.py` 会自动固定 `--template anime-girl-and-man-date-photo-collage-3x3`，不要重复传 `--template`。
+- 若未提供 `panel_1` 到 `panel_9`，`scene_generator.py` 会尝试通过支持 chat completions 的 endpoint 生成分镜。
+- 若需要完全可控的九宫格内容，请显式传入 `panel_1` 到 `panel_9`。
+- 动态场景辅助逻辑额外接受 `theme`，并兼容 `girl_subject` 作为 `anime_girl_subject` 的别名；但模板本身的正式变量仍是 `anime_girl_subject`。

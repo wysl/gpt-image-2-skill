@@ -1,50 +1,41 @@
 # bedroom-mirror-selfie
 
-## 作用
-- 模板定义：`template.json`
-- Prompt 组装：`builder.py`
-- 固定入口：`run.py`
+## 用途
+用于生成卧室镜自拍风格的人像图，强调真实皮肤质感、自然居家氛围与亲密感。
 
-## 目录规则
-- 模板 history 存放位置：`template/bedroom-mirror-selfie/history/`
-- 图片 output 存放位置：`~/.hermes/output/gpt-image-2/bedroom-mirror-selfie/`
-- output 目录可在 `config.json` 的 `output_dir` 字段中自定义
+## 目录内容
+- `template.json`：模板结构与占位变量
+- `builder.py`：将模板变量组装为最终 prompt
+- `run.py`：固定模板入口
 
-## 默认信息
-- 模板显示名：bedroom-mirror-selfie
-- 默认质量：high
-- 默认比例：9:16
-- 默认最长边：3840
-- 默认尺寸：2160x3840
-
-## 支持的默认变量
-- `age`
-- `bedroom_description`
-- `body_type`
-- `clothing_description`
-- `expression`
-- `face_features`
-- `focal_length`
-- `hair_description`
-- `lighting_type`
-- `mood_type`
-- `name`
-- `pose_description`
+## 关键变量
+- 人物：`name`、`age`、`body_type`、`expression`、`face_features`
+- 姿态与造型：`pose_description`、`hair_description`、`clothing_description`
+- 场景与拍摄：`bedroom_description`、`lighting_type`、`focal_length`、`mood_type`
 
 ## 推荐调用
 ```bash
-cd template/bedroom-mirror-selfie
-python3 run.py --vars '{"subject_name":"Mirror selfie girl"}' --output selfie.png --timeout 500
+python3 template/bedroom-mirror-selfie/run.py \
+  --vars '{
+    "name": "Ava",
+    "age": "22",
+    "expression": "soft smile",
+    "pose_description": "sitting on the bed and holding the phone toward the mirror",
+    "bedroom_description": "a cozy bedroom with soft window light and a slightly messy bed"
+  }' \
+  --output bedroom-selfie.png
 ```
 
+## 尺寸规则
+- 显式传入 `--size` 时，总是以 `--size` 为准。
+- 未传 `--size` 时，本模板读取 `config.json` 中当前优先级最高 endpoint 的 `post_max_size`。
+- `template.json` 里的 `aspect_ratio` / `longest side` 只表达模板意图，不是运行时硬编码默认尺寸。
+
+## 输出与 history
+- 生成历史保存在 `template/bedroom-mirror-selfie/history/`。
+- 如果传入 `--output`，图片写到指定位置。
+- 如果不传 `--output`，图片输出到 `config.json` 的 `output_dir/bedroom-mirror-selfie/`；未配置时使用项目默认输出目录。
+
 ## 注意事项
-- 此模板没有单独的动态场景生成逻辑
-- 模板行为主要由 `template.json` + `builder.py` 决定
-
-
-
-## 默认尺寸规则
-
-本模板在未显式传 `--size` 时，读取 `config.json` 中当前优先级最高 endpoint 的 `post_max_size`。
-
-如果显式传了 `--size`，则始终以用户传入尺寸为准。
+- `run.py` 会自动固定 `--template bedroom-mirror-selfie`，不要重复传 `--template`。
+- README 示例请使用真实变量名；本模板没有 `subject_name`，应使用 `name`、`age`、`pose_description` 等字段。

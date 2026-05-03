@@ -1,193 +1,162 @@
-# 基础图片类型规范
+# 基础用法
 
-## 1. 信息图 (Infographic)
+本文档补充 `README.md` 中的通用用法，重点说明怎样写更稳定的 prompt，以及什么时候该用通用入口而不是模板。
 
-**用途**：解释结构化信息、教学图解、流程图、时间线
+## 何时使用 `generate.py`
 
-**规范**：
-- 密集布局或大量文字时，使用 `quality: "high"`
-- 描述信息流动和结构关系
+优先使用 `generate.py` 的场景：
 
-**模板**：
-```
-Create a detailed Infographic of [主题].
-From [组件A], to [组件B], to [组件C], etc.
-Include [关键流程/关系].
-清晰标注各部分，结构化布局，专业设计风格。
-```
+- 你已经有完整 prompt，不需要模板变量。
+- 你在做一次性的概念图、示意图、信息图或广告图。
+- 你需要 `edit`、`composite` 或 `inpaint` 模式。
 
-**示例**：
-```
-Create a detailed Infographic of the functioning and flow of an automatic coffee machine.
-From bean basket, to grinding, to scale, water tank, boiler, etc.
-清晰标注每个组件，展示技术流程。
+基础命令：
+
+```bash
+python3 generate.py --prompt "your prompt" --size 1024x1536 --quality high
 ```
 
----
+如果不传 `--size`，通用生成会默认读取当前最高优先级 endpoint 的 `design_max_size`。
 
-## 2. 照片级写实 (Photorealism)
+## Prompt 编写建议
 
-**用途**：人物肖像、产品摄影、场景写实
+### 1. 信息图
 
-**规范**：
-- 使用摄影语言（镜头、光线、构图）
-- 明确要求真实纹理（毛孔、皱纹、磨损）
-- 避免 studio polish、staging 等词
-- 细节重要时使用 `quality: "high"`
+适合：流程图、结构图、时间线、说明图。
 
-**模板**：
-```
-Create a photorealistic candid photograph of [主体].
-[人物细节：皮肤纹理、皱纹、毛孔等].
-[动作/姿态描述].
-Shot like a 35mm film photograph, [视角], using a [镜头规格].
-[光线描述：soft daylight, shallow depth of field, film grain].
-The image should feel honest and unposed, with real texture. No glamorization, no heavy retouching.
-```
+建议：
 
-**示例**：
-```
-Create a photorealistic candid photograph of an elderly sailor on a fishing boat.
-Weathered skin with visible wrinkles, pores, sun texture. Faded sailor tattoos.
-Shot like 35mm film, medium close-up, 50mm lens.
-Soft coastal daylight, shallow depth of field, subtle film grain.
-Honest and unposed, real skin texture, worn materials. No heavy retouching.
+- 明确主题和信息流顺序。
+- 元素较多时使用结构化描述。
+- 文字密集时保持 `quality high`。
+
+示例：
+
+```text
+Create a detailed infographic about the workflow of an automatic coffee machine.
+Show the flow from bean storage to grinding, weighing, water heating, extraction, and cup output.
+Use a clean layout with clear labels and a professional design style.
 ```
 
----
+### 2. 写实摄影
 
-## 3. Logo 设计
+适合：人物肖像、产品摄影、写实场景。
 
-**用途**：品牌标志设计
+建议：
 
-**规范**：
-- 描述品牌性格和用途
-- 要求简洁、强形状、平衡负空间
-- 可用 `n: 4` 生成多个版本
-- 使用 `non-infringing` 避免版权问题
+- 使用镜头、光线、构图和材质语言。
+- 明确真实纹理，而不是只写“高清”“精美”。
+- 需要细节时写清楚皮肤、材质、环境状态。
 
-**模板**：
-```
-Create an original, non-infringing logo for a company called [品牌名], [行业/定位].
-The logo should feel [品牌性格：warm, modern, timeless].
-Use clean, vector-like shapes, strong silhouette, balanced negative space.
-Favor simplicity over detail so it reads clearly at small and large sizes.
-Flat design, minimal strokes, no gradients unless essential.
-Plain background. Deliver a single centered logo with generous padding. No watermark.
+示例：
+
+```text
+Create a photorealistic candid portrait of an elderly sailor on a fishing boat.
+Weathered skin, visible wrinkles and pores, salt-stained clothing, soft coastal daylight, shallow depth of field, subtle film grain.
+The image should feel honest and unposed, with no heavy retouching.
 ```
 
-**示例**：
-```
-Create an original, non-infringing logo for Field & Flour, a local bakery.
-The logo should feel warm, simple, timeless.
-Clean vector shapes, strong silhouette, balanced negative space.
-Favor simplicity, reads clearly at all sizes. Flat design, no gradients.
-Plain background, centered with padding. No watermark.
-```
+### 3. Logo
 
----
+适合：简洁品牌标志探索。
 
-## 4. 广告设计 (Ad Generation)
+建议：
 
-**用途**：品牌广告、营销素材
+- 说明品牌性格和使用场景。
+- 强调简洁、可缩放、非侵权。
+- 避免把大量品牌故事直接塞进 prompt。
 
-**规范**：
-- 写成创意简报形式（brand brief），而非纯技术规格
-- 描述品牌、受众、文化、概念、构图、文案
-- 文案用引号精确引用，要求清晰排版
-- 让模型做审美决策
+示例：
 
-**模板**：
-```
-Give me a [风格] ad / [类型] shot for a brand called [品牌名].
-[品牌定位描述].
-The ad shows [场景描述] with the tagline "[文案]".
-Make it feel like a polished [目标受众描述]: [风格关键词].
-Use clean composition, strong color direction, natural poses.
-Render the tagline exactly once, clearly and legibly, integrated into the layout.
-No extra text, no watermarks, no unrelated logos.
+```text
+Create an original, non-infringing logo for a local bakery called Field & Flour.
+The logo should feel warm, simple, and timeless.
+Use clean vector-like shapes, strong silhouette, balanced negative space, and a plain background.
 ```
 
-**示例**：
-```
-Give me a cool in-culture ad for Thread, a hip street brand.
-Shows friends hanging out with tagline "Yours to Create."
-Polished campaign image for youth streetwear audience: stylish, contemporary, energetic.
-Clean composition, strong color direction, natural poses.
-Render tagline clearly and legibly. No extra text, no watermarks.
-```
+### 4. 广告图
 
----
+适合：品牌广告、活动 KV、营销海报。
 
-## 5. 漫画/多格图 (Story-to-Comic)
+建议：
 
-**用途**：故事转漫画、多格连环画
+- 像写简短创意简报，而不是堆参数。
+- 明确品牌、受众、场景和文案。
+- 如果需要画面里出现文字，用引号包住并说明“清晰可读”。
 
-**规范**：
-- 定义清晰的视觉节拍（visual beats），一格一个
-- 描述具体、动作导向
-- 指定竖版或横版排列
-- 每格清晰边框分隔
+示例：
 
-**模板（4格竖版）**：
-```
-Create a short vertical comic-style reel with 4 equal-sized panels.
-Panel 1: [场景描述、动作、对话].
-Panel 2: [场景描述].
-Panel 3: [场景描述].
-Panel 4: [场景描述].
-Each panel clearly separated with black borders, [风格关键词].
+```text
+Create a polished campaign image for a youth streetwear brand called Thread.
+Show a group of friends in an urban setting with the tagline "Yours to Create" rendered exactly once.
+Use clean composition, strong color direction, natural poses, and no extra text or watermarks.
 ```
 
-**模板（8格竖版）**：
+### 5. 多格漫画或分镜
+
+适合：短故事、概念分镜、多格图。
+
+建议：
+
+- 一格写一个明确动作或情节。
+- 写清面板数量、排版方向和边框要求。
+- 让视觉节拍足够具体。
+
+示例：
+
+```text
+Create a vertical comic-style reel with 4 equal-sized panels.
+Panel 1: The owner leaves through the front door while the pet watches from the window.
+Panel 2: The door clicks shut and the pet turns toward the empty house.
+Panel 3: The pet sprawls across the sofa like it owns the place.
+Panel 4: The owner returns and the pet sits innocently by the window.
+Each panel should be clearly separated with black borders.
 ```
-Create a vertical comic-style layout with 8 equal-sized panels.
-Panel 1: [场景描述].
-Panel 2: [场景描述].
-...
-Panel 8: [场景描述].
-Each panel clearly separated, expressive characters, [风格] style.
-```
 
-**示例**：
-```
-Create a short vertical comic-style reel with 4 equal-sized panels.
-Panel 1: The owner leaves through the front door. Pet framed in window, eyes wide.
-Panel 2: Door clicks shut. Silence. Pet turns toward empty house, posture shifting.
-Panel 3: House transformed. Pet sprawls across couch like it owns the place.
-Panel 4: Door opens. Pet perches innocently by window.
-Each panel clearly separated, expressive characters, manga style.
-```
+### 6. 世界知识场景
 
----
+适合：特定年代、地点或历史语境下的画面。
 
-## 6. 世界知识推理 (World Knowledge)
+建议：
 
-**用途**：特定历史/地点场景
+- 直接写地点和时间。
+- 再补充你关心的真实感关键词。
 
-**规范**：
-- 描述地点、时间
-- 模型会自动推断历史背景
-- 使用 `photorealistic, period-accurate`
+示例：
 
-**示例**：
-```
+```text
 Create a realistic outdoor crowd scene in Bethel, New York on August 16, 1969.
-Photorealistic, period-accurate clothing, staging, environment.
-（模型会自动推断 Woodstock 音乐节背景）
+Photorealistic, period-accurate clothing, staging, and environment.
 ```
 
----
+### 7. 图片文字翻译
 
-## 7. 文字翻译/本地化 (Text Translation)
+适合：替换图片中的文字，但尽量不改版式。
 
-**用途**：翻译图片中的文字，保持设计不变
+示例：
 
-**规范**：
-- 只描述翻译任务
-- 强调保持其他一切不变
-
-**模板**：
+```text
+Translate the text in the image to Japanese. Do not change any other aspect of the image.
 ```
-Translate the text in the image to [语言]. Do not change any other aspect of the image.
-```
+
+## 什么时候切换到模板
+
+如果你遇到以下情况，优先考虑模板：
+
+- 需要稳定复用同一种视觉结构。
+- 需要把输入拆成多个具名字段。
+- 需要固定的海报、写真或九宫格版式。
+
+例如：
+
+- 单人人像摄影：`template/portrait-photography/run.py`
+- 双人写真：`template/couple-portrait/run.py`
+- 街头摄影：`template/street-photography/run.py`
+- 九宫格：`template/person-photoshoot-3x3/run.py`
+
+## 输出与 history
+
+- 通用生成图片默认输出到 `output_dir/normal/`。
+- 通用生成 history 保存到仓库根目录 `history/`。
+
+详见根目录 `README.md` 的“输出与 history”章节。

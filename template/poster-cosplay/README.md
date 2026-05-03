@@ -1,33 +1,18 @@
 # poster-cosplay
 
-## 作用
-- 模板定义：`template.json`
-- Prompt 组装：`builder.py`
-- 固定入口：`run.py`
+## 用途
+- `poster-cosplay` 的固定模板入口，调用 `run.py` 时会自动路由到根目录 `generate.py`，并强制使用 `--template poster-cosplay`
+- 模板内容定义在 `template.json`
+- Prompt 组装逻辑在 `builder.py`
 
-## 目录规则
-- 模板 history 存放位置：`template/poster-cosplay/history/`
-- 图片 output 存放位置：`~/.hermes/output/gpt-image-2/poster-cosplay/`
-- output 目录可在 `config.json` 的 `output_dir` 字段中自定义
+## 目录内容
+- `template.json`：模板内容与默认变量
+- `builder.py`：将模板转换为最终 prompt
+- `run.py`：固定模板入口脚本
+- `history/`：该模板的请求历史目录
 
-## 默认信息
-- 模板显示名：Cosplay角色海报
-- 默认质量：high
-- 默认比例：9:16
-- 默认最长边：3840
-- 默认尺寸：2160x3840
-
-## 支持的默认变量
-- `xxx` - 角色名/描述（用于替换占位符）
-
-## 排版规则
-- **非主题文字使用中文**
-- 文字层级：
-  1. 主标题 - [xxx]（高对比纤细衬线体或中文宋体）
-  2. 副标题 - [xxx]名称或皮肤名（中等字重中文黑体）
-  3. 中文短标语（细中文宋体）
-  4. 期号 + 发布信息（中文细黑体）
-  5. 条形码 + ISBN（标准条码字体）
+## 关键变量
+- `xxx`：角色名或角色描述，会替换模板中的 `[xxx]`
 
 ## 推荐调用
 ```bash
@@ -35,15 +20,17 @@ cd template/poster-cosplay
 python3 run.py --vars '{"xxx":"莎赫拉查德 Code S from Brown Dust 2"}' --output poster.png --timeout 500
 ```
 
+## 尺寸规则
+- 显式传入 `--size` 时，始终以 `--size` 为准
+- 未传 `--size` 时，本模板使用当前最高优先级已启用 endpoint 的 `post_max_size`
+
+## 输出与 history
+- history 写入：`template/poster-cosplay/history/`
+- 图片输出目录：`config.json` 的 `output_dir` + `/poster-cosplay`
+- 未配置 `output_dir` 时，默认输出到：`~/.hermes/output/gpt-image-2/poster-cosplay/`
+- `--output` 传相对路径时，文件会写入模板输出目录；传绝对路径时，按绝对路径保存
+
 ## 注意事项
-- 此模板没有单独的动态场景生成逻辑
-- 模板行为主要由 `template.json` + `builder.py` 决定
-- 排版层级已整理为清晰的5级结构
-- 非主题文字统一使用中文
-
-
-## 默认尺寸规则
-
-本模板在未显式传 `--size` 时，读取 `config.json` 中当前优先级最高 endpoint 的 `post_max_size`。
-
-如果显式传了 `--size`，则始终以用户传入尺寸为准。
+- `run.py` 会自动固定模板名，不要再额外传 `--template`
+- 模板排版规则来自 `template.json` 的 `typography`，其中非主题文字使用中文
+- 本模板的 prompt 结构由 `builder.py` 定义，包含人物、服装、环境、构图、灯光、氛围与文字层级
