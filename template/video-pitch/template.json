@@ -295,6 +295,5 @@
   },
   "quality": "high",
   "aspect_ratio": "9:16",
-  "longest_side": "2560",
-  "default_size": "1440x2560"
+  "longest_side": "2560"
 }

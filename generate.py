@@ -530,7 +530,6 @@ def main():
     
     # 模板处理
     template_prompt = None
-    template_size = None
     template_quality = None
     history_dir = resolve_history_dir(args.template) if args.template else HISTORY_DIR
     
@@ -551,22 +550,22 @@ def main():
             except json.JSONDecodeError as e:
                 print(f"Error: Invalid JSON in --vars: {e}")
                 sys.exit(1)
-        template_prompt, template_size, template_quality = template_to_prompt(args.template, template, variables)
+        template_prompt, _, template_quality = template_to_prompt(args.template, template, variables)
         print(f"Template: {args.template}")
         print(f"Generated prompt: {template_prompt[:200]}...")
-    
+
     # 确定 prompt（模板优先，用户参数覆盖）
     prompt = args.prompt or template_prompt
     if not prompt:
         print("Error: --prompt required (or use --template)")
         sys.exit(1)
-    
-    # 确定参数（仅在用户显式传参时覆盖模板；否则优先使用模板值，再回退到端点尺寸配置）
+
+    # 确定参数（仅在用户显式传参时覆盖；未显式传 --size 时统一走端点配置）
     user_provided_size = any(arg in sys.argv for arg in ['--size', '--size=', '-s'])
     user_provided_quality = any(arg in sys.argv for arg in ['--quality'])
 
     endpoint_default_size = get_default_size_for_context(args.template, args.mode)
-    size = args.size if user_provided_size else (template_size or endpoint_default_size)
+    size = args.size if user_provided_size else endpoint_default_size
     quality = args.quality if user_provided_quality else (template_quality or 'high')
     
     # 根据模式执行
