@@ -1,22 +1,37 @@
 {
   "endpoints": [
     {
-      "name": "your-provider-1",
-      "url": "https://your-api-endpoint.example/v1",
+      "name": "88996.cloud",
+      "url": "https://88996.cloud/v1",
       "model": "gpt-image-2",
-      "key": "YOUR_API_KEY_HERE",
-      "priority": 1,
-      "timeout": 500,
-      "enabled": true
-    },
-    {
-      "name": "your-provider-2",
-      "url": "https://another-api-endpoint.example/v1",
-      "model": "gpt-image-2",
-      "key": "YOUR_API_KEY_HERE",
+      "key": "sk-your-key-here",
       "priority": 2,
       "timeout": 500,
-      "enabled": false
+      "enabled": true,
+      "post_max_size": "2160x3840",
+      "design_max_size": "1440x2560"
+    },
+    {
+      "name": "bltcy.ai",
+      "url": "https://api.bltcy.ai/v1",
+      "model": "gpt-image-2",
+      "key": "sk-your-key-here",
+      "priority": 1,
+      "timeout": 500,
+      "enabled": true,
+      "post_max_size": "1440x2560",
+      "design_max_size": "1440x2560"
+    },
+    {
+      "name": "xflow",
+      "url": "https://api.xflow.cc/v1",
+      "model": "gpt-image-2",
+      "key": "sk-your-key-here",
+      "priority": 3,
+      "timeout": 500,
+      "enabled": true,
+      "post_max_size": "1440x2560",
+      "design_max_size": "1440x2560"
     }
   ],
   "default_model": "gpt-image-2",
